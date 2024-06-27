@@ -77,7 +77,7 @@ flutter:
   fonts:
     - family: Schyler
       fonts:
-        - asset/font/Roboto-Black.ttf
+        - asset: asset/font/Roboto-Black.ttf
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
