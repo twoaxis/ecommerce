@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import LabeledInputField from "../../molecules/LabeledInputField";
 import Button from "../../atoms/Button";
+import ErrorElement from "../../atoms/Error";
 
 const Form = styled("form")`
 	text-align: center;
@@ -28,18 +29,67 @@ const Notice = styled("p")`
 	margin-top: 15px;
 	color: #888;
 `;
+const ErrorMessage = styled(ErrorElement)`
+	margin-bottom: 10px;
+`;
 
 const SignupForm = () => {
 
+	const [ pending, setPending ] = useState(false);
+	const [ error, setError ] = useState();
+	const [ input, setInput ] = useState({
+		email: "",
+		password: "",
+		repeatPassword: ""
+	});
+
+	const handleInput = (e) => {
+		setInput({
+			...input,
+			[e.target.name]: e.target.value
+		});
+	}
+	
+	const submit = (e) => {
+		e.preventDefault();
+		
+		setError(null);
+		setPending(true);
+
+		try {
+			if(input.email.length === 0 ||
+			input.password.length === 0 ||
+			input.repeatPassword.length === 0) {
+				throw new Error("Please fill all fields");
+			}
+			else if(input.password !== input.repeatPassword) {
+				throw new Error("Passwords don't match");
+			}
+			else {
+				// TODO: Login
+			}
+		}
+		catch({ message }) {
+			setError(message);
+		}
+		finally {
+			setPending(false);
+		}
+		
+	}
+
 	return (
-		<Form>
+		<Form onSubmit={submit}>
 			<Title>Create an Account</Title>
+			{error && <ErrorMessage>{error}</ErrorMessage>}
 			<LabeledInputField 
 				id="email" 
 				type="email" 
 				name="email"
 				label="E-mail" 
 				placeholder="johnsmith@twoaxis.com"
+				disabled={pending}
+				onChange={handleInput}
 			/>
 			<LabeledInputField 
 				id="password" 
@@ -47,6 +97,8 @@ const SignupForm = () => {
 				name="password"
 				label="Password" 
 				placeholder="•••••••••••"
+				disabled={pending}
+				onChange={handleInput}
 			/>
 			<LabeledInputField 
 				id="repeatPassword" 
@@ -54,8 +106,13 @@ const SignupForm = () => {
 				name="repeatPassword"
 				label="Repeat Password" 
 				placeholder="•••••••••••"
+				disabled={pending}
+				onChange={handleInput}
 			/>
-			<SubmitButton>Sign up</SubmitButton>
+			<SubmitButton
+				disabled={pending}
+				type="submit"
+			>Sign up</SubmitButton>
 			<Notice>By signing up, you agree to our terms of service and privacy policy.</Notice>
 		</Form>
 	)

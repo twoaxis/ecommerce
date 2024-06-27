@@ -8,6 +8,11 @@ const Button = styled("button")`
 	padding: 10px;
 	border-radius: 5px;
 	cursor: pointer;
+
+	&:disabled {
+		cursor: default;
+		opacity: 0.5;
+	}
 `;
 
 export default Button;
