@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class CostomTextField extends StatelessWidget {
-  CostomTextField(
+class CustomTextField extends StatelessWidget {
+  CustomTextField.CustomTextField(
       {required this.text,
-      required this.textInputTypee,
+      required this.textInputType,
       required this.hint_text,
       required this.isPassword});
   String text;
-  TextInputType textInputTypee;
+  TextInputType textInputType;
   bool isPassword;
   String hint_text;
   @override
   Widget build(BuildContext context) {
     return TextField(
-      keyboardType: textInputTypee,
+      
+      keyboardType: textInputType,
       obscureText: isPassword,
       decoration: InputDecoration(
         labelText: text,
