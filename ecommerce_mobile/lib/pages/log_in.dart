@@ -1,9 +1,8 @@
 import 'package:ecommerce_mobile/components/text_field.dart';
-import 'package:ecommerce_mobile/pages/log_in.dart';
 import 'package:flutter/material.dart';
 
-class Sign_up extends StatelessWidget {
-  const Sign_up({super.key});
+class LogIn extends StatelessWidget {
+  const LogIn({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +12,7 @@ class Sign_up extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(33.0),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(
                 "asset/image/logo.png",
@@ -20,7 +20,7 @@ class Sign_up extends StatelessWidget {
                     MediaQuery.of(context).size.width * .25,
               ),
               Text(
-                "Create an Account",
+                "Log in to your account",
                 style: TextStyle(
                   fontFamily: "Roboto",
                   fontSize: 40,
@@ -32,7 +32,7 @@ class Sign_up extends StatelessWidget {
               CustomTextField.CustomTextField(
                 text: "E-mail",
                 textInputType: TextInputType.emailAddress,
-                hint_text: 'johnsmith@twoaxis.com',
+                hint_text: 'Enter Your Email',
                 isPassword: false,
               ),
               SizedBox(
@@ -47,18 +47,9 @@ class Sign_up extends StatelessWidget {
               SizedBox(
                 height: 33.0,
               ),
-              CustomTextField.CustomTextField(
-                text: "Confirm Password",
-                textInputType: TextInputType.emailAddress,
-                hint_text: 'Enter Your Password',
-                isPassword: true,
-              ),
-              SizedBox(
-                height: 33.0,
-              ),
               ElevatedButton(
                 onPressed: () {},
-                child: Text("Sign Up",
+                child: Text("Log in",
                     style: TextStyle(
                       fontFamily: "Roboto",
                       fontSize: 20,
@@ -76,7 +67,7 @@ class Sign_up extends StatelessWidget {
                 height: 33.0,
               ),
               Text(
-                'By signing up, you agree to our terms of conditions and privacy policy',
+                'By logging in, you agree to our terms of conditions and privacy policy',
                 style: TextStyle(
                   fontFamily: "Roboto",
                   fontSize: 20,
@@ -88,19 +79,17 @@ class Sign_up extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return LogIn();
-                  }));
+                  Navigator.pop(context);
                 },
                 child: Text(
-                  'Already have an account? Log In',
+                  'Not a member? Sign up',
                   style: TextStyle(
                     fontFamily: "Roboto",
                     fontSize: 20,
                     color: Colors.black38,
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),
