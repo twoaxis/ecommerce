@@ -6,6 +6,7 @@ import "./style.css";
 
 // Pages
 import Signup from "./pages/auth/Signup";
+import Login from "./pages/auth/Login";
 
 const App = () => {
 
@@ -13,6 +14,10 @@ const App = () => {
 		{
 			path: "/auth/signup",
 			element: <Signup />
+		},
+		{
+			path: "/auth/login",
+			element: <Login />
 		}
 	]);
 

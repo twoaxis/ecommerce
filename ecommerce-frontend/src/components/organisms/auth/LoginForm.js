@@ -51,14 +51,13 @@ const CustomLink = styled(Link)`
 	}
 `;
 
-const SignupForm = () => {
+const LoginForm = () => {
 
 	const [ pending, setPending ] = useState(false);
 	const [ error, setError ] = useState();
 	const [ input, setInput ] = useState({
 		email: "",
 		password: "",
-		repeatPassword: ""
 	});
 
 	const handleInput = (e) => {
@@ -98,7 +97,7 @@ const SignupForm = () => {
 
 	return (
 		<Form onSubmit={submit}>
-			<Title>Create an Account</Title>
+			<Title>Log into your account</Title>
 			{error && <ErrorMessage>{error}</ErrorMessage>}
 			<LabeledInputField 
 				id="email" 
@@ -118,23 +117,14 @@ const SignupForm = () => {
 				disabled={pending}
 				onChange={handleInput}
 			/>
-			<LabeledInputField 
-				id="repeatPassword" 
-				type="password" 
-				name="repeatPassword"
-				label="Repeat Password" 
-				placeholder="•••••••••••"
-				disabled={pending}
-				onChange={handleInput}
-			/>
 			<SubmitButton
 				disabled={pending}
 				type="submit"
-			>Sign up</SubmitButton>
-			<CustomLink to="/auth/login" disabled={pending}>Log in</CustomLink>
-			<Notice>By signing up, you agree to our terms of service and privacy policy.</Notice>
+			>Log In</SubmitButton>
+			<CustomLink to="/auth/signup" disabled={pending}>Create an account</CustomLink>
+			<Notice>By logging in, you agree to our terms of service and privacy policy.</Notice>
 		</Form>
 	)
 };
 
-export default SignupForm;
+export default LoginForm;
