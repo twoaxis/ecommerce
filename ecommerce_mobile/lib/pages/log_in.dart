@@ -1,4 +1,5 @@
 import 'package:ecommerce_mobile/components/text_field.dart';
+import 'package:ecommerce_mobile/pages/field_label.dart';
 import 'package:flutter/material.dart';
 
 class LogIn extends StatelessWidget {
@@ -20,26 +21,29 @@ class LogIn extends StatelessWidget {
                   width: MediaQuery.of(context).size.width -
                       MediaQuery.of(context).size.width * .25,
                 ),
+                SizedBox(
+                  height: 20,
+                ),
                 Text(
                   "Log in to your account",
                   style: TextStyle(
                     fontFamily: "Roboto",
-                    fontSize: 40,
+                    fontSize: 30,
                   ),
                 ),
                 SizedBox(
                   height: 33.0,
                 ),
-                Text("E-mail:"),
+                FieldLabel(text: "E-mail:"),
                 CustomTextField.CustomTextField(
                   textInputType: TextInputType.emailAddress,
                   hint_text: 'Enter Your Email',
                   isPassword: false,
                 ),
                 SizedBox(
-                  height: 33.0,
+                  height: 28.0,
                 ),
-                Text("Password:"),
+                FieldLabel(text: 'Password:'),
                 CustomTextField.CustomTextField(
                   textInputType: TextInputType.emailAddress,
                   hint_text: 'Enter Your Password',
@@ -65,6 +69,25 @@ class LogIn extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
+                  height: 11.0,
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text("Sign up",
+                      style: TextStyle(
+                        fontFamily: "Roboto",
+                        fontSize: 20,
+                        color: Colors.black,
+                      )),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        side: BorderSide(color: Colors.black)),
+                    fixedSize: Size(double.maxFinite, 50),
+                  ),
+                ),
+                SizedBox(
                   height: 33.0,
                 ),
                 Text(
@@ -75,22 +98,7 @@ class LogIn extends StatelessWidget {
                     color: Colors.black38,
                   ),
                 ),
-                SizedBox(
-                  height: 33.0,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    'Not a member? Sign up',
-                    style: TextStyle(
-                      fontFamily: "Roboto",
-                      fontSize: 20,
-                      color: Colors.black38,
-                    ),
-                  ),
-                )
+                
               ],
             ),
           ),

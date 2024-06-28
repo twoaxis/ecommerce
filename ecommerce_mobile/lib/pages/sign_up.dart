@@ -99,6 +99,9 @@ class Sign_up extends StatelessWidget {
                     fixedSize: Size(double.maxFinite, 50),
                   ),
                 ),
+                SizedBox(
+                  height: 33.0,
+                ),
                 Text(
                   'By signing up, you agree to our terms of conditions and privacy policy',
                   style: TextStyle(
@@ -106,9 +109,6 @@ class Sign_up extends StatelessWidget {
                     fontSize: 20,
                     color: Colors.black38,
                   ),
-                ),
-                SizedBox(
-                  height: 33.0,
                 ),
               ],
             ),
