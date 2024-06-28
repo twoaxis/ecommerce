@@ -9,10 +9,12 @@ namespace API.Controllers
     public class AccountController : BaseController
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
 
-        public AccountController(UserManager<AppUser> userManager)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
 
@@ -45,6 +47,28 @@ namespace API.Controllers
             });
         }
 
+        [HttpPost("login")]
+        [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
+        //[ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<AppUserDto>> Login(LoginDto model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            //if (user is null)
+            //    return Unauthorized(new ApiResponse(401));
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+
+            //if (result.Succeeded is false)
+            //    return Unauthorized(new ApiResponse(401));
+
+            return Ok(new AppUserDto
+            {
+                DisplayName = user.DisplayName,
+                Email = model.Email,
+                //Token = await _authService.CreateTokenAsync(user, _userManager)
+            });
+        }
 
         [HttpGet("emailexists")]
         public async Task<ActionResult<bool>> CheckEmailExist(string email)
