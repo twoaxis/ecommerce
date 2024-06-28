@@ -30,8 +30,8 @@ class Sign_up extends StatelessWidget {
                 SizedBox(
                   height: 33.0,
                 ),
+                Text("E-mail:"),
                 CustomTextField.CustomTextField(
-                  text: "E-mail",
                   textInputType: TextInputType.emailAddress,
                   hint_text: 'johnsmith@twoaxis.com',
                   isPassword: false,
@@ -39,8 +39,8 @@ class Sign_up extends StatelessWidget {
                 SizedBox(
                   height: 33.0,
                 ),
+                Text("Password:"),
                 CustomTextField.CustomTextField(
-                  text: "Password",
                   textInputType: TextInputType.emailAddress,
                   hint_text: 'Enter Your Password',
                   isPassword: true,
@@ -48,8 +48,8 @@ class Sign_up extends StatelessWidget {
                 SizedBox(
                   height: 33.0,
                 ),
+                Text("Repeat Password:"),
                 CustomTextField.CustomTextField(
-                  text: "Confirm Password",
                   textInputType: TextInputType.emailAddress,
                   hint_text: 'Enter Your Password',
                   isPassword: true,
