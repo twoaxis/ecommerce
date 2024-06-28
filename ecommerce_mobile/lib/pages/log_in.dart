@@ -1,10 +1,10 @@
 import 'package:ecommerce_mobile/components/text_field.dart';
 import 'package:ecommerce_mobile/pages/field_label.dart';
-import 'package:ecommerce_mobile/pages/log_in.dart';
+import 'package:ecommerce_mobile/pages/sign_up.dart';
 import 'package:flutter/material.dart';
 
-class Sign_up extends StatelessWidget {
-  const Sign_up({super.key});
+class LogIn extends StatelessWidget {
+  const LogIn({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +15,7 @@ class Sign_up extends StatelessWidget {
           padding: const EdgeInsets.all(33.0),
           child: SingleChildScrollView(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Image.asset(
                   "asset/image/logo.png",
@@ -25,37 +26,25 @@ class Sign_up extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  "Create an Account",
+                  "Log in to your account",
                   style: TextStyle(
                     fontFamily: "Roboto",
                     fontSize: 30,
                   ),
                 ),
                 SizedBox(
-                  height: 28.0,
+                  height: 33.0,
                 ),
                 FieldLabel(text: "E-mail:"),
-                SizedBox(
-                  height: 6.0,
-                ),
                 CustomTextField.CustomTextField(
                   textInputType: TextInputType.emailAddress,
                   hint_text: 'johnsmith@twoaxis.xyz',
                   isPassword: false,
                 ),
                 SizedBox(
-                  height: 20.0,
+                  height: 28.0,
                 ),
                 FieldLabel(text: 'Password:'),
-                CustomTextField.CustomTextField(
-                  textInputType: TextInputType.emailAddress,
-                  hint_text: '••••••••••••••',
-                  isPassword: true,
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                FieldLabel(text: 'Repeat Password:'),
                 CustomTextField.CustomTextField(
                   textInputType: TextInputType.emailAddress,
                   hint_text: '••••••••••••••',
@@ -66,7 +55,7 @@ class Sign_up extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {},
-                  child: Text("Sign Up",
+                  child: Text("Log in",
                       style: TextStyle(
                         fontFamily: "Roboto",
                         fontSize: 20,
@@ -86,9 +75,9 @@ class Sign_up extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => LogIn()));
+                        MaterialPageRoute(builder: (context) => Sign_up()));
                   },
-                  child: Text("Log in",
+                  child: Text("Sign up",
                       style: TextStyle(
                         fontFamily: "Roboto",
                         fontSize: 20,
@@ -106,7 +95,7 @@ class Sign_up extends StatelessWidget {
                   height: 33.0,
                 ),
                 Text(
-                  'By signing up, you agree to our terms of conditions and privacy policy',
+                  'By logging in, you agree to our terms of conditions and privacy policy',
                   style: TextStyle(
                     fontFamily: "Roboto",
                     fontSize: 20,
