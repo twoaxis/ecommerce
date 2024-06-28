@@ -1,0 +1,11 @@
+E:\ecommerce\ecommerce_backend\Service\bin\Debug\net7.0\Service.deps.json
+E:\ecommerce\ecommerce_backend\Service\bin\Debug\net7.0\Service.dll
+E:\ecommerce\ecommerce_backend\Service\bin\Debug\net7.0\Service.pdb
+E:\ecommerce\ecommerce_backend\Service\obj\Debug\net7.0\Service.GeneratedMSBuildEditorConfig.editorconfig
+E:\ecommerce\ecommerce_backend\Service\obj\Debug\net7.0\Service.AssemblyInfoInputs.cache
+E:\ecommerce\ecommerce_backend\Service\obj\Debug\net7.0\Service.AssemblyInfo.cs
+E:\ecommerce\ecommerce_backend\Service\obj\Debug\net7.0\Service.csproj.CoreCompileInputs.cache
+E:\ecommerce\ecommerce_backend\Service\obj\Debug\net7.0\Service.dll
+E:\ecommerce\ecommerce_backend\Service\obj\Debug\net7.0\refint\Service.dll
+E:\ecommerce\ecommerce_backend\Service\obj\Debug\net7.0\Service.pdb
+E:\ecommerce\ecommerce_backend\Service\obj\Debug\net7.0\ref\Service.dll

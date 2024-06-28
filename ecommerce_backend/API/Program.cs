@@ -1,24 +1,33 @@
+using API.ServicesExtension;
+using Microsoft.EntityFrameworkCore;
+using Repository.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Register API Controller
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+// Register Required Services For Swagger In Extension Method
+builder.Services.AddSwaggerServices();
+
+// Identity Store Context
+builder.Services.AddDbContext<IdentityContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection"));
+});
+
+// Register Database Connection
+builder.Services.AddDatabaseConnections();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // -- Add Swagger Middelwares In Extension Method
+    app.UseSwaggerMiddleware();
 }
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.MapControllers();
 
