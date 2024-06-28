@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import TextField from "../atoms/TextField";
+import TextField from "./TextField";
 
 const Container = styled("div")`
 	text-align: left;

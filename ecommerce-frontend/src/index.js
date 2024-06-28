@@ -1,16 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import "./style.css";
 
 // Pages
-import Signup from "./pages/auth/Signup";
-import Login from "./pages/auth/Login";
+import Signup from "./pages/auth/Signup.js";
+import Login from "./pages/auth/Login.js";
+import Product from "./loaders/Product.js";
 
 const App = () => {
 
 	const router = createBrowserRouter([
+		// Authentication
 		{
 			path: "/auth/signup",
 			element: <Signup />
@@ -18,6 +20,16 @@ const App = () => {
 		{
 			path: "/auth/login",
 			element: <Login />
+		},
+
+		// Products
+		{
+			path: "/product/",
+			element: <Navigate to="/" /> // No product id
+		},
+		{
+			path: "/product/:id",
+			element: <Product />
 		}
 	]);
 

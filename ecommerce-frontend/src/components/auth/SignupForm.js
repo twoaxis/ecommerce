@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import LabeledInputField from "../../molecules/LabeledInputField";
-import Button from "../../atoms/Button";
-import ErrorElement from "../../atoms/Error";
+import LabeledInputField from "../common/LabeledInputField";
+import Button from "../common/Button";
+import ErrorElement from "../common/Error";
 import { Link } from "react-router-dom";
 
 const Form = styled("form")`
