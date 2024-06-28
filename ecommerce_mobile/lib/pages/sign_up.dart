@@ -40,7 +40,7 @@ class Sign_up extends StatelessWidget {
                 ),
                 CustomTextField.CustomTextField(
                   textInputType: TextInputType.emailAddress,
-                  hint_text: 'johnsmith@twoaxis.com',
+                  hint_text: 'johnsmith@twoaxis.xyz',
                   isPassword: false,
                 ),
                 SizedBox(
@@ -49,7 +49,7 @@ class Sign_up extends StatelessWidget {
                 FieldLabel(text: 'Password:'),
                 CustomTextField.CustomTextField(
                   textInputType: TextInputType.emailAddress,
-                  hint_text: 'Enter Your Password',
+                  hint_text: '••••••••••••••',
                   isPassword: true,
                 ),
                 SizedBox(
@@ -58,7 +58,7 @@ class Sign_up extends StatelessWidget {
                 FieldLabel(text: 'Repeat Password:'),
                 CustomTextField.CustomTextField(
                   textInputType: TextInputType.emailAddress,
-                  hint_text: 'Enter Your Password',
+                  hint_text: '••••••••••••••',
                   isPassword: true,
                 ),
                 SizedBox(

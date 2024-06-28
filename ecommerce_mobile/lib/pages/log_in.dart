@@ -38,7 +38,7 @@ class LogIn extends StatelessWidget {
                 FieldLabel(text: "E-mail:"),
                 CustomTextField.CustomTextField(
                   textInputType: TextInputType.emailAddress,
-                  hint_text: 'Enter Your Email',
+                  hint_text: 'johnsmith@twoaxis.xyz',
                   isPassword: false,
                 ),
                 SizedBox(
@@ -47,7 +47,7 @@ class LogIn extends StatelessWidget {
                 FieldLabel(text: 'Password:'),
                 CustomTextField.CustomTextField(
                   textInputType: TextInputType.emailAddress,
-                  hint_text: 'Enter Your Password',
+                  hint_text: '••••••••••••••',
                   isPassword: true,
                 ),
                 SizedBox(
