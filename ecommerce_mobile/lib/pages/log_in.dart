@@ -1,5 +1,6 @@
 import 'package:ecommerce_mobile/components/text_field.dart';
 import 'package:ecommerce_mobile/pages/field_label.dart';
+import 'package:ecommerce_mobile/pages/sign_up.dart';
 import 'package:flutter/material.dart';
 
 class LogIn extends StatelessWidget {
@@ -72,7 +73,10 @@ class LogIn extends StatelessWidget {
                   height: 11.0,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => Sign_up()));
+                  },
                   child: Text("Sign up",
                       style: TextStyle(
                         fontFamily: "Roboto",
@@ -98,7 +102,6 @@ class LogIn extends StatelessWidget {
                     color: Colors.black38,
                   ),
                 ),
-                
               ],
             ),
           ),

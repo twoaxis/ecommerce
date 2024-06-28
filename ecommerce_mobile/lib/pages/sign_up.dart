@@ -84,7 +84,10 @@ class Sign_up extends StatelessWidget {
                   height: 11.0,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => LogIn()));
+                  },
                   child: Text("Log in",
                       style: TextStyle(
                         fontFamily: "Roboto",
