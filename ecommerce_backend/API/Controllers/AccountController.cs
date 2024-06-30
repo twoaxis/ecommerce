@@ -23,8 +23,8 @@ namespace API.Controllers
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<AppUserDto>> Register(RegisterDto model)
         {
-            //if (CheckEmailExist(model.Email).Result.Value)
-            //    return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "This email has already been used" } });
+            if (CheckEmailExist(model.Email).Result.Value)
+                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "This email has already been used" } });
 
             var user = new AppUser()
             {
