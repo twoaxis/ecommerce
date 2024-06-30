@@ -1,5 +1,5 @@
 import 'package:ecommerce_mobile/components/text_field.dart';
-import 'package:ecommerce_mobile/pages/field_label.dart';
+import 'package:ecommerce_mobile/components/field_label.dart';
 import 'package:ecommerce_mobile/pages/sign_up.dart';
 import 'package:flutter/material.dart';
 
