@@ -1,6 +1,7 @@
 ﻿using API.Dtos;
 using API.Errors;
 using Core.Entities.IdentityEntities;
+using Core.Interfaces.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,11 +11,14 @@ namespace API.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IAuthService _authService;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
+            IAuthService authService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _authService = authService;
         }
 
 
@@ -43,7 +47,7 @@ namespace API.Controllers
             {
                 DisplayName = user.DisplayName,
                 Email = model.Email,
-                //Token = await _authService.CreateTokenAsync(user, _userManager)
+                Token = await _authService.CreateTokenAsync(user, _userManager)
             });
         }
 
@@ -66,7 +70,7 @@ namespace API.Controllers
             {
                 DisplayName = user.DisplayName,
                 Email = model.Email,
-                //Token = await _authService.CreateTokenAsync(user, _userManager)
+                Token = await _authService.CreateTokenAsync(user, _userManager)
             });
         }
 

@@ -9,3 +9,7 @@ E:\ecommerce\ecommerce_backend\Service\obj\Debug\net7.0\Service.dll
 E:\ecommerce\ecommerce_backend\Service\obj\Debug\net7.0\refint\Service.dll
 E:\ecommerce\ecommerce_backend\Service\obj\Debug\net7.0\Service.pdb
 E:\ecommerce\ecommerce_backend\Service\obj\Debug\net7.0\ref\Service.dll
+E:\ecommerce\ecommerce_backend\Service\bin\Debug\net7.0\Core.dll
+E:\ecommerce\ecommerce_backend\Service\bin\Debug\net7.0\Core.pdb
+E:\ecommerce\ecommerce_backend\Service\obj\Debug\net7.0\Service.csproj.AssemblyReference.cache
+E:\ecommerce\ecommerce_backend\Service\obj\Debug\net7.0\Service.csproj.CopyComplete

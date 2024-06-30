@@ -1,9 +1,12 @@
 using API.Errors;
 using API.Middlewares;
 using API.ServicesExtension;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Repository.Data;
+using System.Text;
 
 #region Update Database Problems And Solution
 // To Update Database You Should Do Two Things 
@@ -42,6 +45,37 @@ builder.Services.AddDbContext<IdentityContext>(options =>
 
 // Register Database Connection
 builder.Services.AddDatabaseConnections();
+
+// AddAuthentication() : this method take one argument (Default Schema)
+// and when we using .AddJwtBearer(): this method can take from you another schema and options
+// and can take just options and this options worked on the default schema that you written it in AddAuthentication()
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme; // We use it for to be don't have to let every end point what is the shema because it will make every end point work on bearer schema
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateAudience = true,
+        ValidAudience = builder.Configuration["JWT:ValidAudience"],
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"])),
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.FromMinutes(double.Parse(builder.Configuration["JWT:DurationInMinutes"])),
+    };
+})
+// If You need to doing some options on another schema
+.AddJwtBearer("Bearer2", options =>
+{
+
+});
+
+// This Method Has All Application Services
+builder.Services.AddApplicationServices();
 
 #region Validation Error - Bad Request
 // -- Validation Error (Bad Request) 
@@ -113,6 +147,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerMiddleware();
 }
 
+
 // -- To this application can resolve on any static file like (html, wwwroot, etc..)
 app.UseStaticFiles();
 
@@ -134,6 +169,10 @@ app.UseStatusCodePagesWithReExecute("/error/{0}");
 ///});
 /// -- But We Use MapController Instead Of It Because We Create Routing On Controller Itself
 app.MapControllers(); // -> we use this middleware to talk program that: your routing depend on route written on the controller
+
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 #endregion
 
