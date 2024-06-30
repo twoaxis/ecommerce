@@ -55,12 +55,14 @@ class LogIn extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {},
-                  child: Text("Log in",
-                      style: TextStyle(
-                        fontFamily: "Roboto",
-                        fontSize: 20,
-                        color: Colors.white,
-                      )),
+                  child: Text(
+                    "Log in",
+                    style: TextStyle(
+                      fontFamily: "Roboto",
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFFa71f1f),
                     shape: RoundedRectangleBorder(
@@ -74,20 +76,27 @@ class LogIn extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => Sign_up()));
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Sign_up(),
+                      ),
+                    );
                   },
-                  child: Text("Sign up",
-                      style: TextStyle(
-                        fontFamily: "Roboto",
-                        fontSize: 20,
-                        color: Colors.black,
-                      )),
+                  child: Text(
+                    "Sign up",
+                    style: TextStyle(
+                      fontFamily: "Roboto",
+                      fontSize: 20,
+                      color: Colors.black,
+                    ),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        side: BorderSide(color: Colors.black)),
+                      borderRadius: BorderRadius.circular(16),
+                      side: BorderSide(color: Colors.black),
+                    ),
                     fixedSize: Size(double.maxFinite, 50),
                   ),
                 ),

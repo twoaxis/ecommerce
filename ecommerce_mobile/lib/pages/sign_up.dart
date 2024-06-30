@@ -85,20 +85,27 @@ class Sign_up extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => LogIn()));
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LogIn(),
+                      ),
+                    );
                   },
-                  child: Text("Log in",
-                      style: TextStyle(
-                        fontFamily: "Roboto",
-                        fontSize: 20,
-                        color: Colors.black,
-                      )),
+                  child: Text(
+                    "Log in",
+                    style: TextStyle(
+                      fontFamily: "Roboto",
+                      fontSize: 20,
+                      color: Colors.black,
+                    ),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        side: BorderSide(color: Colors.black)),
+                      borderRadius: BorderRadius.circular(16),
+                      side: BorderSide(color: Colors.black),
+                    ),
                     fixedSize: Size(double.maxFinite, 50),
                   ),
                 ),
