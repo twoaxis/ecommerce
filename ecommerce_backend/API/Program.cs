@@ -1,4 +1,6 @@
+using API.Errors;
 using API.ServicesExtension;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repository.Data;
 
@@ -39,6 +41,33 @@ builder.Services.AddDbContext<IdentityContext>(options =>
 
 // Register Database Connection
 builder.Services.AddDatabaseConnections();
+
+#region Validation Error - Bad Request
+// -- Validation Error (Bad Request) 
+// --- First: We need to bring options which have InvalidModelState
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    // --- then we need all data (actionContext) of action has validation error
+    options.InvalidModelStateResponseFactory = (actionContext) =>
+    {
+        // --- then we bring ModelState: Dictionary key/value pair for each parameter, and value has property Errors Array have all errors
+        // --- and we use where to bring dictionary key/value pair which is value has errors 
+        var errors = actionContext.ModelState.Where(P => P.Value.Errors.Count() > 0)
+        // --- then we use SelectMany to make one array of all errors  
+        .SelectMany(P => P.Value.Errors)
+        // --- then we use Select to bring from errors just ErrorMessages
+        .Select(E => E.ErrorMessage)
+        .ToArray();
+        // --- then we insert this errors to the class we made
+        var validationErrorResponse = new ApiValidationErrorResponse()
+        {
+            Errors = errors
+        };
+        // then return it :)
+        return new BadRequestObjectResult(validationErrorResponse);
+    };
+});
+#endregion
 
 #endregion
 
@@ -101,4 +130,4 @@ app.MapControllers(); // -> we use this middleware to talk program that: your ro
 
 #endregion
 
-app.Run();
+app.Run(); 

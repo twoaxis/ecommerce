@@ -1,6 +1,6 @@
 ﻿using API.Dtos;
+using API.Errors;
 using Core.Entities.IdentityEntities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +20,7 @@ namespace API.Controllers
 
         [HttpPost("register")]
         [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<AppUserDto>> Register(RegisterDto model)
         {
             //if (CheckEmailExist(model.Email).Result.Value)
@@ -36,8 +36,8 @@ namespace API.Controllers
 
             var result = await _userManager.CreateAsync(user, model.Password);
 
-            //if (result.Succeeded is false)
-            //    return BadRequest(new ApiResponse(400));
+            if (result.Succeeded is false)
+                return BadRequest(new ApiResponse(400));
 
             return Ok(new AppUserDto
             {
@@ -49,18 +49,18 @@ namespace API.Controllers
 
         [HttpPost("login")]
         [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<AppUserDto>> Login(LoginDto model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
 
-            //if (user is null)
-            //    return Unauthorized(new ApiResponse(401));
+            if (user is null)
+                return Unauthorized(new ApiResponse(401));
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
 
-            //if (result.Succeeded is false)
-            //    return Unauthorized(new ApiResponse(401));
+            if (result.Succeeded is false)
+                return Unauthorized(new ApiResponse(401));
 
             return Ok(new AppUserDto
             {
