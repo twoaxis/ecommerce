@@ -12,8 +12,9 @@ class LogIn extends StatefulWidget {
 
 class _LogInState extends State<LogIn> {
   TextEditingController emailController = TextEditingController();
-
   TextEditingController passwordController = TextEditingController();
+
+  String error = "";
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,31 @@ class _LogInState extends State<LogIn> {
                     fontSize: 30,
                   ),
                 ),
+                error.length > 0
+                    ? Column(
+                        children: [
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                color: Color.fromARGB(30, 255, 0, 0),
+                                border:
+                                    Border.all(width: 2.0, color: Colors.red)),
+                            child: Text(
+                              error,
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.red,
+                              ),
+                            ),
+                          )
+                        ],
+                      )
+                    : SizedBox(height: 0),
                 SizedBox(
                   height: 33.0,
                 ),
@@ -68,12 +94,10 @@ class _LogInState extends State<LogIn> {
                   onPressed: () {
                     if (emailController.text.isEmpty ||
                         passwordController.text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                        "Please fill in all the fields",
-                      )));
-                    }
-                    else {
+                      setState(() {
+                        error = "Please fill in all fields";
+                      });
+                    } else {
                       // TODO: Authentication Request
                     }
                   },
