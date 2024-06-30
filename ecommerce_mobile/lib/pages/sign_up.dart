@@ -15,7 +15,7 @@ class _Sign_upState extends State<Sign_up> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController repeatPasswordController = TextEditingController();
 
-  
+  String error = "";
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +42,31 @@ class _Sign_upState extends State<Sign_up> {
                     fontSize: 30,
                   ),
                 ),
+                error.length > 0
+                    ? Column(
+                        children: [
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                color: Color.fromARGB(30, 255, 0, 0),
+                                border:
+                                    Border.all(width: 2.0, color: Colors.red)),
+                            child: Text(
+                              error,
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.red,
+                              ),
+                            ),
+                          )
+                        ],
+                      )
+                    : SizedBox(height: 0),
                 SizedBox(
                   height: 28.0,
                 ),
@@ -79,7 +104,22 @@ class _Sign_upState extends State<Sign_up> {
                   height: 33.0,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (emailController.text.isEmpty ||
+                        passwordController.text.isEmpty ||
+                        repeatPasswordController.text.isEmpty) {
+                      setState(() {
+                        error = "Please fill in all fields";
+                      });
+                    } else if (passwordController.text !=
+                        repeatPasswordController.text) {
+                      setState(() {
+                        error = "Passwords do not match";
+                      });
+                    } else {
+                      // TODO: Authentication Request
+                    }
+                  },
                   child: Text("Sign Up",
                       style: TextStyle(
                         fontFamily: "Roboto",
