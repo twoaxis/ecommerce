@@ -3,8 +3,17 @@ import 'package:ecommerce_mobile/pages/field_label.dart';
 import 'package:ecommerce_mobile/pages/sign_up.dart';
 import 'package:flutter/material.dart';
 
-class LogIn extends StatelessWidget {
-  const LogIn({super.key});
+class LogIn extends StatefulWidget {
+  LogIn({super.key});
+
+  @override
+  State<LogIn> createState() => _LogInState();
+}
+
+class _LogInState extends State<LogIn> {
+  TextEditingController emailController = TextEditingController();
+
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +46,7 @@ class LogIn extends StatelessWidget {
                 ),
                 FieldLabel(text: "E-mail:"),
                 CustomTextField.CustomTextField(
+                  controller: emailController,
                   textInputType: TextInputType.emailAddress,
                   hint_text: 'johnsmith@twoaxis.xyz',
                   isPassword: false,
@@ -46,6 +56,7 @@ class LogIn extends StatelessWidget {
                 ),
                 FieldLabel(text: 'Password:'),
                 CustomTextField.CustomTextField(
+                  controller: passwordController,
                   textInputType: TextInputType.emailAddress,
                   hint_text: '••••••••••••••',
                   isPassword: true,
@@ -54,7 +65,18 @@ class LogIn extends StatelessWidget {
                   height: 33.0,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (emailController.text.isEmpty ||
+                        passwordController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                        "Please fill in all the fields",
+                      )));
+                    }
+                    else {
+                      // TODO: Authentication Request
+                    }
+                  },
                   child: Text("Log in",
                       style: TextStyle(
                         fontFamily: "Roboto",

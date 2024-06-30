@@ -3,8 +3,17 @@ import 'package:ecommerce_mobile/pages/field_label.dart';
 import 'package:ecommerce_mobile/pages/log_in.dart';
 import 'package:flutter/material.dart';
 
-class Sign_up extends StatelessWidget {
+class Sign_up extends StatefulWidget {
   const Sign_up({super.key});
+
+  @override
+  State<Sign_up> createState() => _Sign_upState();
+}
+
+class _Sign_upState extends State<Sign_up> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController repeatPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +48,7 @@ class Sign_up extends StatelessWidget {
                   height: 6.0,
                 ),
                 CustomTextField.CustomTextField(
+                  controller: emailController,
                   textInputType: TextInputType.emailAddress,
                   hint_text: 'johnsmith@twoaxis.xyz',
                   isPassword: false,
@@ -48,6 +58,7 @@ class Sign_up extends StatelessWidget {
                 ),
                 FieldLabel(text: 'Password:'),
                 CustomTextField.CustomTextField(
+                  controller: passwordController,
                   textInputType: TextInputType.emailAddress,
                   hint_text: '••••••••••••••',
                   isPassword: true,
@@ -57,6 +68,7 @@ class Sign_up extends StatelessWidget {
                 ),
                 FieldLabel(text: 'Repeat Password:'),
                 CustomTextField.CustomTextField(
+                  controller: repeatPasswordController,
                   textInputType: TextInputType.emailAddress,
                   hint_text: '••••••••••••••',
                   isPassword: true,
