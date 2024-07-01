@@ -1,10 +1,10 @@
 class Product {
   String name;
   String? description;
-  String price;
+  int  price;
   String? image;
   int quantity;
-  Product.add(
+  Product(
       {required this.name,
       this.description,
       required this.price,

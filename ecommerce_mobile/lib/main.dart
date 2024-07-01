@@ -1,7 +1,3 @@
-import 'dart:math';
-
-import 'package:ecommerce_mobile/components/text_field.dart';
-import 'package:ecommerce_mobile/pages/log_in.dart';
 import 'package:ecommerce_mobile/pages/sign_up.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +12,7 @@ class ecommerce extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LogIn(),
+      home: Sign_up(),
     );
   }
 }
