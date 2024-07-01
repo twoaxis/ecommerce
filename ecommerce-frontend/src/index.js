@@ -7,7 +7,9 @@ import "./style.css";
 // Pages
 import Signup from "./pages/auth/Signup.js";
 import Login from "./pages/auth/Login.js";
-import Product from "./loaders/Product.js";
+
+// Pages with loaders
+import ProductLoader from "./loaders/ProductLoader.js";
 
 const App = () => {
 
@@ -29,7 +31,7 @@ const App = () => {
 		},
 		{
 			path: "/product/:id",
-			element: <Product />
+			element: <ProductLoader />
 		}
 	]);
 

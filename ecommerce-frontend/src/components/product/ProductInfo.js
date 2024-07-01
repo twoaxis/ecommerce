@@ -2,13 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import Ratings from "../common/Ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartArrowDown, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import Button from "../common/Button";
 
 const Container = styled("section")`
 	display: flex;
 	gap: 50px;
+	width: 100%;
 	
+	@media (max-width: 800px) {
+		flex-direction: column;
+	}
 `;
 
 const FlexItem = styled("div")`
@@ -16,6 +20,7 @@ const FlexItem = styled("div")`
 `;
 const ProductImage = styled("img")`
 	width: 100%;
+	max-height: 1000px;
 `;
 const Intro = styled("div")`
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -23,6 +28,9 @@ const Intro = styled("div")`
 `;
 const Title = styled("h1")`
 	font-size: 35px;
+	@media (max-width: 800px) {
+		font-size: 28px;
+	}
 `;
 const Price = styled("p")`
 	font-size: 20px;
