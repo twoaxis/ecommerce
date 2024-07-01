@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "smeHnQHuw3PBNkAw9B9XEJ8ZUiRUjfmeuSQjnfKOJvyKYgmdnf6L+K8EsZ+08qEoCMyBUzXiDMi5LrxfL6gDfw==",
+  "dgSpecHash": "77W/5Iyu44zy8mJxWltR+7bV7hTkUxhpmz0KA67bW60mauqhOkX+PGquUZTYR/6D7QXBODN7najsanbaQNNkNQ==",
   "success": true,
   "projectFilePath": "E:\\ecommerce\\ecommerce_backend\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Haitham\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Haitham\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\Haitham\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\Haitham\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.20\\microsoft.aspnetcore.authentication.jwtbearer.7.0.20.nupkg.sha512",
     "C:\\Users\\Haitham\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\7.0.20\\microsoft.aspnetcore.cryptography.internal.7.0.20.nupkg.sha512",
     "C:\\Users\\Haitham\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\7.0.20\\microsoft.aspnetcore.cryptography.keyderivation.7.0.20.nupkg.sha512",
     "C:\\Users\\Haitham\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\7.0.20\\microsoft.aspnetcore.identity.entityframeworkcore.7.0.20.nupkg.sha512",

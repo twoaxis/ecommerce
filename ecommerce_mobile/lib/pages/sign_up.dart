@@ -1,10 +1,22 @@
 import 'package:ecommerce_mobile/components/text_field.dart';
 import 'package:ecommerce_mobile/components/field_label.dart';
 import 'package:ecommerce_mobile/pages/log_in.dart';
+import 'package:ecommerce_mobile/components/error.dart' as ErrorComponent;
 import 'package:flutter/material.dart';
 
-class Sign_up extends StatelessWidget {
+class Sign_up extends StatefulWidget {
   const Sign_up({super.key});
+
+  @override
+  State<Sign_up> createState() => _Sign_upState();
+}
+
+class _Sign_upState extends State<Sign_up> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController repeatPasswordController = TextEditingController();
+
+  String error = "";
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +43,9 @@ class Sign_up extends StatelessWidget {
                     fontSize: 30,
                   ),
                 ),
+                error.length > 0
+                    ? ErrorComponent.ErrorWidget(content: error)
+                    : SizedBox(height: 0),
                 SizedBox(
                   height: 28.0,
                 ),
@@ -39,6 +54,7 @@ class Sign_up extends StatelessWidget {
                   height: 6.0,
                 ),
                 CustomTextField.CustomTextField(
+                  controller: emailController,
                   textInputType: TextInputType.emailAddress,
                   hint_text: 'johnsmith@twoaxis.xyz',
                   isPassword: false,
@@ -48,6 +64,7 @@ class Sign_up extends StatelessWidget {
                 ),
                 FieldLabel(text: 'Password:'),
                 CustomTextField.CustomTextField(
+                  controller: passwordController,
                   textInputType: TextInputType.emailAddress,
                   hint_text: '••••••••••••••',
                   isPassword: true,
@@ -57,6 +74,7 @@ class Sign_up extends StatelessWidget {
                 ),
                 FieldLabel(text: 'Repeat Password:'),
                 CustomTextField.CustomTextField(
+                  controller: repeatPasswordController,
                   textInputType: TextInputType.emailAddress,
                   hint_text: '••••••••••••••',
                   isPassword: true,
@@ -65,7 +83,25 @@ class Sign_up extends StatelessWidget {
                   height: 33.0,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      error = "";
+                    });
+                    if (emailController.text.isEmpty ||
+                        passwordController.text.isEmpty ||
+                        repeatPasswordController.text.isEmpty) {
+                      setState(() {
+                        error = "Please fill in all fields";
+                      });
+                    } else if (passwordController.text !=
+                        repeatPasswordController.text) {
+                      setState(() {
+                        error = "Passwords do not match";
+                      });
+                    } else {
+                      // TODO: Authentication Request
+                    }
+                  },
                   child: Text("Sign Up",
                       style: TextStyle(
                         fontFamily: "Roboto",
