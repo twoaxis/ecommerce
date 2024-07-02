@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import ProductInfo from "../components/product/ProductInfo";
+import Header from "../components/common/header/Header";
 
 const Container = styled("div")`
 	width: 900px;
@@ -11,9 +12,12 @@ const Container = styled("div")`
 `;
 
 const Product = () => (
-	<Container>
-		<ProductInfo />
-	</Container>
+	<>
+		<Header />
+		<Container>
+			<ProductInfo />
+		</Container>
+	</>
 );
 
 export default Product;

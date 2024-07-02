@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Ratings from "../common/Ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
-import Button from "../common/Button";
+import Button from "../common/input/Button";
 
 const Container = styled("section")`
 	display: flex;

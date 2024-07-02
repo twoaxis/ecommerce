@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import LabeledInputField from "../common/LabeledInputField";
-import Button from "../common/Button";
+import LabeledInputField from "../common/input/LabeledInputField";
+import Button from "../common/input/Button";
 import ErrorElement from "../common/Error";
 import { Link } from "react-router-dom";
 
