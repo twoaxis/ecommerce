@@ -59,9 +59,10 @@ class _CartPageState extends State<CartPage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
-            padding: EdgeInsets.all(12),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          padding: EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Text(
                 "CART",
                 style: TextStyle(
@@ -70,85 +71,87 @@ class _CartPageState extends State<CartPage> {
                     fontWeight: FontWeight.bold),
               ),
               Expanded(
-                  child: ListView.builder(
-                      itemCount: products.length,
-                      itemBuilder: (context, index) {
-                        return Dismissible(
-                          key: Key(products[index].name),
-                          direction: DismissDirection.endToStart,
-                          onDismissed: (direction) => {
-                            setState(() {
-                              products.removeAt(index);
-                            })
-                          },
-                          background: Container(
-                            color: primaryColor,
-                            child: Icon(
-                              Icons.cancel,
-                              color: Colors.white,
+                child: ListView.builder(
+                  itemCount: products.length,
+                  itemBuilder: (context, index) {
+                    return Dismissible(
+                      key: Key(products[index].name),
+                      direction: DismissDirection.endToStart,
+                      onDismissed: (direction) => {
+                        setState(() {
+                          products.removeAt(index);
+                        })
+                      },
+                      background: Container(
+                        color: primaryColor,
+                        child: Icon(
+                          Icons.cancel,
+                          color: Colors.white,
+                        ),
+                        alignment: Alignment.centerRight,
+                        padding: EdgeInsets.only(right: 16.0),
+                      ),
+                      child: Container(
+                        margin: EdgeInsets.all(10.0),
+                        padding: EdgeInsets.only(right: 16.0),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              'asset/image/place_holder.png',
+                              height: 50,
+                              width: 50,
                             ),
-                            alignment: Alignment.centerRight,
-                            padding: EdgeInsets.only(right: 16.0),
-                          ),
-                          child: Container(
-                            margin: EdgeInsets.all(10.0),
-                            padding: EdgeInsets.only(right: 16.0),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8)),
-                            child: Row(
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Column(
                               children: [
-                                Image.asset(
-                                  'asset/image/place_holder.png',
-                                  height: 50,
-                                  width: 50,
+                                Text(
+                                  products[index].name,
+                                  style: TextStyle(
+                                      fontFamily: 'Roboto', fontSize: 18.0),
                                 ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Column(
-                                  children: [
-                                    Text(
-                                      products[index].name,
-                                      style: TextStyle(
-                                          fontFamily: 'Roboto', fontSize: 18.0),
-                                    ),
-                                    Text(
-                                      '\$${products[index].price}',
-                                      style: TextStyle(
-                                          fontFamily: 'Roboto',
-                                          fontSize: 16.0,
-                                          color: Colors.grey),
-                                    )
-                                  ],
-                                ),
-                                Spacer(),
-                                Row(
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {
-                                          decrementQuantity(index);
-                                        },
-                                        icon: Icon(Icons.remove)),
-                                    Text(
-                                      products[index].quantity.toString(),
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        incrementalQuantity(index);
-                                      },
-                                      icon: Icon(Icons.add),
-                                    )
-                                  ],
+                                Text(
+                                  '\$${products[index].price}',
+                                  style: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontSize: 16.0,
+                                      color: Colors.grey),
                                 )
                               ],
                             ),
-                          ),
-                        );
-                      })),
+                            Spacer(),
+                            Row(
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      decrementQuantity(index);
+                                    },
+                                    icon: Icon(Icons.remove)),
+                                Text(
+                                  products[index].quantity.toString(),
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    incrementalQuantity(index);
+                                  },
+                                  icon: Icon(Icons.add),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
               Divider(),
               Padding(
                 padding: EdgeInsets.all(10.0),
@@ -191,8 +194,10 @@ class _CartPageState extends State<CartPage> {
                     )
                   ],
                 ),
-              )
-            ])),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
