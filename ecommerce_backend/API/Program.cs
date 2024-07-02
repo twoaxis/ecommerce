@@ -1,11 +1,14 @@
 using API.Errors;
 using API.Middlewares;
 using API.ServicesExtension;
+using Core.Entities.IdentityEntities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Repository.Data;
+using Repository.Identity;
 using System.Text;
 
 #region Update Database Problems And Solution
@@ -127,6 +130,12 @@ try
 {
     // Migrate IdentityContext
     await _identiyContext.Database.MigrateAsync();
+
+    var _userManager = services.GetRequiredService<UserManager<AppUser>>();
+
+    var _roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+    await IdentityContextSeeding.SeedIdentityData(_userManager, _roleManager);
 }
 catch (Exception ex)
 {

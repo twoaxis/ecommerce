@@ -2,6 +2,7 @@ import 'package:ecommerce_mobile/components/text_field.dart';
 import 'package:ecommerce_mobile/components/field_label.dart';
 import 'package:ecommerce_mobile/pages/log_in.dart';
 import 'package:ecommerce_mobile/components/error.dart' as ErrorComponent;
+import 'package:ecommerce_mobile/style.dart';
 import 'package:flutter/material.dart';
 
 class Sign_up extends StatefulWidget {
@@ -109,7 +110,7 @@ class _Sign_upState extends State<Sign_up> {
                         color: Colors.white,
                       )),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFa71f1f),
+                    backgroundColor: primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
