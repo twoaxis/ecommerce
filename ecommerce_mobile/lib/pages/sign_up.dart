@@ -1,3 +1,4 @@
+import 'package:ecommerce_mobile/components/custom_scaffold.dart';
 import 'package:ecommerce_mobile/components/text_field.dart';
 import 'package:ecommerce_mobile/components/field_label.dart';
 import 'package:ecommerce_mobile/pages/log_in.dart';
@@ -21,8 +22,7 @@ class _Sign_upState extends State<Sign_up> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
+    return CustomScaffold(
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(33.0),
@@ -85,22 +85,26 @@ class _Sign_upState extends State<Sign_up> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    setState(() {
-                      error = "";
-                    });
+                    setState(
+                      () {
+                        error = "";
+                      },
+                    );
                     if (emailController.text.isEmpty ||
                         passwordController.text.isEmpty ||
                         repeatPasswordController.text.isEmpty) {
-                      setState(() {
-                        error = "Please fill in all fields";
-                      });
+                      setState(
+                        () {
+                          error = "Please fill in all fields";
+                        },
+                      );
                     } else if (passwordController.text !=
                         repeatPasswordController.text) {
-                      setState(() {
-                        error = "Passwords do not match";
-                      });
-                    } else {
-                      // TODO: Authentication Request
+                      setState(
+                        () {
+                          error = "Passwords do not match";
+                        },
+                      );
                     }
                   },
                   child: Text("Sign Up",
