@@ -6,11 +6,6 @@ namespace Repository.Data
 {
     public class IdentityContext: IdentityDbContext<AppUser>
     {
-        public IdentityContext()
-        {
-            
-        }
-
         public IdentityContext(DbContextOptions<IdentityContext> options): base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

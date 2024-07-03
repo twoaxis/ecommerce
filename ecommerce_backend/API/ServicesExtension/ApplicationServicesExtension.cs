@@ -1,4 +1,6 @@
-﻿using Core.Interfaces.Services;
+﻿using API.EmailSetting;
+using Core.Interfaces.EmailSetting;
+using Core.Interfaces.Services;
 using Service;
 
 namespace API.ServicesExtension
@@ -18,6 +20,8 @@ namespace API.ServicesExtension
 
             // Register AuthService
             services.AddScoped(typeof(IAuthService), typeof(AuthService));
+
+            services.AddTransient(typeof(IEmailSettings), typeof(EmailSettings));
 
             return services;
         }

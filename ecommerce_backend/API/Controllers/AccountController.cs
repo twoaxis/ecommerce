@@ -1,9 +1,13 @@
 ﻿using API.Dtos;
+using API.EmailSetting;
 using API.Errors;
 using Core.Entities.IdentityEntities;
+using Core.Interfaces.EmailSetting;
 using Core.Interfaces.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System.Net.Mail;
 
 namespace API.Controllers
 {
@@ -12,13 +16,15 @@ namespace API.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IAuthService _authService;
+        private readonly IEmailSettings _emailSettings;
 
         public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
-            IAuthService authService)
+            IAuthService authService, IEmailSettings emailSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _authService = authService;
+            _emailSettings = emailSettings;
         }
 
 
@@ -78,6 +84,33 @@ namespace API.Controllers
         public async Task<ActionResult<bool>> CheckEmailExist(string email)
         {
             return await _userManager.FindByEmailAsync(email) is not null;
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> ForgetPassword(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user is null)
+                return NotFound(new ApiResponse(404));
+
+            Email emailToSend = new Email()
+            {
+                To = user.Email,
+                Subject = "Change Password",
+                Body = "This is link"
+            };
+
+            try
+            {
+                _emailSettings.SendEmail(emailToSend);
+            }
+            catch(Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            return Ok(emailToSend);
         }
     }
 }

@@ -1,6 +1,7 @@
 using API.Errors;
 using API.Middlewares;
 using API.ServicesExtension;
+using API.Settings;
 using Core.Entities.IdentityEntities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ using Repository.Identity;
 #region Update Database Problems And Solution
 // To Update Database You Should Do Two Things 
 // 1. Create Object From DbContext
-//--- StoreDbContext _storeDbContext = new StoreDbContext();
+//StoreDbContext _storeDbContext = new StoreDbContext();
 // 2. Migrate It
 //--- await _storeDbContext.Database.MigrateAsync();
 // But To Create Instanse From DbContext You Should Have Non Parameterized Constructor In StoreContext Class
@@ -45,6 +46,8 @@ builder.Services.AddJWTConfigurations(builder.Configuration);
 
 // This Method Has All Application Services
 builder.Services.AddApplicationServices();
+
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
 #region Validation Error - Bad Request
 // -- Validation Error (Bad Request) 
@@ -89,6 +92,10 @@ var services = scope.ServiceProvider;
 
 // --> Bring Object Of IdentityContext For Update His Migration
 var _identiyContext = services.GetRequiredService<IdentityContext>();
+// --> Bring Object Of UserManager
+var _userManager = services.GetRequiredService<UserManager<AppUser>>();
+// --> Bring Object Of RoleManager
+var _roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 // --> Bring Object Of ILoggerFactory For Good Show Error In Console    
 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
 
@@ -96,11 +103,7 @@ try
 {
     // Migrate IdentityContext
     await _identiyContext.Database.MigrateAsync();
-
-    var _userManager = services.GetRequiredService<UserManager<AppUser>>();
-
-    var _roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-
+    // Seeding Data For IdentityContext
     await IdentityContextSeeding.SeedIdentityData(_userManager, _roleManager);
 }
 catch (Exception ex)
@@ -121,7 +124,6 @@ if (app.Environment.IsDevelopment())
     // -- Add Swagger Middelwares In Extension Method
     app.UseSwaggerMiddleware();
 }
-
 
 // -- To this application can resolve on any static file like (html, wwwroot, etc..)
 app.UseStaticFiles();

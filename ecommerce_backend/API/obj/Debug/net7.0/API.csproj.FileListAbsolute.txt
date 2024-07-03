@@ -87,3 +87,9 @@ E:\ecommerce\ecommerce_backend\API\bin\Debug\net7.0\runtimes\win\lib\net6.0\Syst
 E:\ecommerce\ecommerce_backend\API\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 E:\ecommerce\ecommerce_backend\API\bin\Debug\net7.0\Service.dll
 E:\ecommerce\ecommerce_backend\API\bin\Debug\net7.0\Service.pdb
+E:\ecommerce\ecommerce_backend\API\bin\Debug\net7.0\BouncyCastle.Cryptography.dll
+E:\ecommerce\ecommerce_backend\API\bin\Debug\net7.0\MailKit.dll
+E:\ecommerce\ecommerce_backend\API\bin\Debug\net7.0\MimeKit.dll
+E:\ecommerce\ecommerce_backend\API\bin\Debug\net7.0\System.Formats.Asn1.dll
+E:\ecommerce\ecommerce_backend\API\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
+E:\ecommerce\ecommerce_backend\API\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll

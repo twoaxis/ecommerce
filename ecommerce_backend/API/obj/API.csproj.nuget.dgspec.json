@@ -47,6 +47,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.20, )"
@@ -56,6 +60,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.20, )"
+            },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[4.7.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
