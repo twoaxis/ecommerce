@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import TextField from "../input/TextField";
 import Button from "../input/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faMagnifyingGlass, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled("header")`
 	height: 60px;
@@ -44,15 +44,15 @@ const UserContainer = styled("div")`
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
+	gap: 15px;
 	
 	@media (max-width: 800px) {
 		flex: initial;
 	}
 `;
-const UserIcon = styled("img")`
-	width: 32px;
-	border: 1px solid rgba(0, 0, 0, 0.1);
-	border-radius: 50%;
+const Action = styled(Link)`
+	color: gray;
+	font-size: 22px;
 `;
 
 
@@ -70,7 +70,8 @@ const Header = () => {
 				<SearchButton><FontAwesomeIcon icon={faMagnifyingGlass} /></SearchButton>
 			</SearchBarContainer>
 			<UserContainer>
-				<Link to="/"><UserIcon src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/768px-User_icon_2.svg.png" /></Link>
+				<Action to="/"><FontAwesomeIcon icon={faCartShopping} /></Action>
+				<Action to="/"><FontAwesomeIcon icon={faUser} /></Action>
 			</UserContainer>
 		</Container>
 	)
