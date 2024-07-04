@@ -1,15 +1,15 @@
 import React from "react";
 import { useParams } from "react-router-dom"
-import ProductTemplate from "../pages/Product";
+import Product from "../pages/Product";
 
-const Product = () => {
+const ProductLoader = () => {
 	const { id } = useParams();
 
 	return (
 		<>
-			<ProductTemplate />
+			<Product />
 		</>
 	)
 }
 
-export default Product;
+export default ProductLoader;
