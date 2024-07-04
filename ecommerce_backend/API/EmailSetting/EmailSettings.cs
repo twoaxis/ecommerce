@@ -32,7 +32,9 @@ namespace API.EmailSetting
             mail.Body = builder.ToMessageBody();
 
             using var smtp = new SmtpClient();
-            smtp.Connect(_options.Host, _options.Port, SecureSocketOptions.SslOnConnect);
+            //smtp.Connect(_options.Host, _options.Port, SecureSocketOptions.SslOnConnect);
+            
+            smtp.Connect(_options.Host, 587, SecureSocketOptions.StartTls);
             smtp.Authenticate(_options.Email, _options.Password);
             smtp.Send(mail);
             smtp.Disconnect(true);
