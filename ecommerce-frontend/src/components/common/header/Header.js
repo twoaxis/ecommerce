@@ -70,8 +70,8 @@ const Header = () => {
 				<SearchButton><FontAwesomeIcon icon={faMagnifyingGlass} /></SearchButton>
 			</SearchBarContainer>
 			<UserContainer>
-				<Action to="/"><FontAwesomeIcon icon={faCartShopping} /></Action>
-				<Action to="/"><FontAwesomeIcon icon={faUser} /></Action>
+				<Action to="/cart"><FontAwesomeIcon icon={faCartShopping} /></Action>
+				<Action to="/settings"><FontAwesomeIcon icon={faUser} /></Action>
 			</UserContainer>
 		</Container>
 	)
