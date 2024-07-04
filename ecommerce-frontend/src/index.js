@@ -10,6 +10,7 @@ import Login from "./pages/auth/Login.js";
 
 // Pages with loaders
 import ProductLoader from "./loaders/ProductLoader.js";
+import CartLoader from "./loaders/CartLoader.js";
 
 const App = () => {
 
@@ -32,6 +33,12 @@ const App = () => {
 		{
 			path: "/product/:id",
 			element: <ProductLoader />
+		},
+
+		// Cart
+		{
+			path: "/cart/",
+			element: <CartLoader />
 		}
 	]);
 
