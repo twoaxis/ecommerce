@@ -6,8 +6,8 @@ using Core.Interfaces.EmailSetting;
 using Core.Interfaces.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System.Net.Mail;
+using Microsoft.EntityFrameworkCore;
+using Repository.Data;
 
 namespace API.Controllers
 {
@@ -17,14 +17,16 @@ namespace API.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IAuthService _authService;
         private readonly IEmailSettings _emailSettings;
+        private readonly IdentityContext _identityContext;
 
         public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
-            IAuthService authService, IEmailSettings emailSettings)
+            IAuthService authService, IEmailSettings emailSettings, IdentityContext identityContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _authService = authService;
             _emailSettings = emailSettings;
+            _identityContext = identityContext;
         }
 
 
@@ -86,8 +88,7 @@ namespace API.Controllers
             return await _userManager.FindByEmailAsync(email) is not null;
         }
 
-
-        [HttpPost]
+        [HttpGet("forgetpassword")]
         public async Task<ActionResult> ForgetPassword(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -102,15 +103,72 @@ namespace API.Controllers
                 Body = "This is link"
             };
 
+            Random random = new Random();
+            var code = random.Next(100000, 1000000).ToString();
+
             try
             {
-                _emailSettings.SendEmail(emailToSend);
+                await _identityContext.IdentityCodes.AddAsync(new IdentityCode()
+                {
+                    Code = code,
+                    AppUserId = user.Id
+                });
+
+                await _identityContext.SaveChangesAsync();
+
+                _emailSettings.SendEmail(emailToSend, code);
             }
             catch(Exception ex) 
             {
                 return BadRequest(ex.Message);
             }
             return Ok(emailToSend);
+        }
+
+        [HttpPost("receivecode")]
+        public async Task<ActionResult> RecieveCode(string email, string code)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user is null)
+                return NotFound(new ApiResponse(404));
+
+            var identityCode = await _identityContext.IdentityCodes.Where(P => P.AppUserId == user.Id).OrderBy(d => d.CreationTime).LastOrDefaultAsync();
+
+            var lastCode = identityCode.Code;
+
+            if(lastCode != code || identityCode.CreationTime.Minute + 1 < DateTime.UtcNow.Minute)
+                return BadRequest(new ApiResponse(400, "This code is expired!"));
+
+            identityCode.IsActive = true;
+            _identityContext.IdentityCodes.Update(identityCode);
+            await _identityContext.SaveChangesAsync();
+
+            return Ok(code);
+        }
+
+        [HttpPost("changepassword")]
+        public async Task<ActionResult> ChangePassword(string email, string newPassword)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user is null)
+                return NotFound(new ApiResponse(404));
+
+            var identityCode = await _identityContext.IdentityCodes.Where(P => P.AppUserId == user.Id).OrderBy(d => d.CreationTime).LastOrDefaultAsync();
+
+            if(!identityCode.IsActive)
+                return BadRequest(new ApiResponse(400, "This code is expired!"));
+
+            var removePasswordResult = await _userManager.RemovePasswordAsync(user);
+            if (!removePasswordResult.Succeeded)
+                return BadRequest(new ApiResponse(400));
+
+            var addPasswordResult = await _userManager.AddPasswordAsync(user, newPassword);
+            if (!addPasswordResult.Succeeded)
+                return BadRequest(new ApiResponse(400));
+
+            return Ok("Password changes successfully :)");
         }
     }
 }

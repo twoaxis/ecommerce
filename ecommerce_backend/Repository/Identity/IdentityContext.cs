@@ -16,5 +16,6 @@ namespace Repository.Data
                 .ToTable("Addresses");
         }
 
+        public DbSet<IdentityCode> IdentityCodes { get; set; }
     }
 }

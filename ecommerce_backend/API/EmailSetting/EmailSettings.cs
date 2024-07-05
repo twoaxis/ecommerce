@@ -16,7 +16,7 @@ namespace API.EmailSetting
             _options = options.Value;
         }
 
-        public void SendEmail(Email email)
+        public void SendEmail(Email email, string code)
         {
             var mail = new MimeMessage
             {
@@ -28,13 +28,12 @@ namespace API.EmailSetting
             mail.To.Add(new MailboxAddress("User", email.To));
 
             var builder = new BodyBuilder();
-            builder.TextBody = email.Body;
+            builder.HtmlBody = $"<h2>This is code to change your password: {code}</h2>";
             mail.Body = builder.ToMessageBody();
 
             using var smtp = new SmtpClient();
-            //smtp.Connect(_options.Host, _options.Port, SecureSocketOptions.SslOnConnect);
-            
-            smtp.Connect(_options.Host, 587, SecureSocketOptions.StartTls);
+            smtp.Connect(_options.Host, _options.Port, SecureSocketOptions.SslOnConnect);
+
             smtp.Authenticate(_options.Email, _options.Password);
             smtp.Send(mail);
             smtp.Disconnect(true);
