@@ -163,7 +163,7 @@ namespace API.Controllers
 
             if (identityCode is null)
                 return BadRequest(new ApiResponse(400, "No valid reset code found."));
-            
+
             if (identityCode.IsActive)
                 return BadRequest(new ApiResponse(400, "You already have an active code."));
 
@@ -176,6 +176,7 @@ namespace API.Controllers
                 return BadRequest(new ApiResponse(400, "Invalid reset code."));
 
             identityCode.IsActive = true;
+            identityCode.ActivationTime = DateTime.UtcNow;
             _identityContext.IdentityCodes.Update(identityCode);
             await _identityContext.SaveChangesAsync();
 
@@ -193,12 +194,15 @@ namespace API.Controllers
             if (user is null)
                 return NotFound(new ApiResponse(404));
 
-            var identityCode = await _identityContext.IdentityCodes.Where(P => P.AppUserId == user.Id).OrderBy(d => d.CreationTime).LastOrDefaultAsync();
+            var identityCode = await _identityContext.IdentityCodes
+                                .Where(p => p.AppUserId == user.Id && p.IsActive)
+                                .OrderByDescending(p => p.CreationTime)
+                                .FirstOrDefaultAsync();
 
             if (identityCode is null)
                 return BadRequest(new ApiResponse(400, "No valid reset code found."));
 
-            if (!identityCode.IsActive)
+            if (identityCode.ActivationTime is null || identityCode.ActivationTime.Value.AddMinutes(1) < DateTime.UtcNow)
                 return BadRequest(new ApiResponse(400, "This code has expired."));
 
             using var transaction = await _identityContext.Database.BeginTransactionAsync();
