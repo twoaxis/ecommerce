@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -15,6 +17,7 @@ namespace API.ServicesExtension
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme; // We use it for to be don't have to let every end point what is the shema because it will make every end point work on bearer schema
+
             })
             .AddJwtBearer(options =>
             {
@@ -30,11 +33,30 @@ namespace API.ServicesExtension
                     ClockSkew = TimeSpan.FromMinutes(double.Parse(configuration["JWT:DurationInMinutes"])),
                 };
             })
-            // If You need to doing some options on another schema
-            .AddJwtBearer("Bearer2", options =>
+            .AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
             {
-
+                var googleAuth = configuration.GetSection("Authentication:Google");
+                options.ClientId = googleAuth["ClientId"];
+                options.ClientSecret = googleAuth["ClientSecret"];
             });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("JwtPolicy", policy =>
+                {
+                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                    policy.RequireAuthenticatedUser();
+                });
+
+                options.AddPolicy("GooglePolicy", policy =>
+                {
+                    policy.AuthenticationSchemes.Add(GoogleDefaults.AuthenticationScheme);
+                    policy.RequireAuthenticatedUser();
+                });
+            });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie();
 
             return services;
         }

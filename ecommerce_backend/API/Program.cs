@@ -49,6 +49,15 @@ builder.Services.AddApplicationServices();
 
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
+// This to allow any host from front-end
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("MyPolicy", options =>
+//    {
+//        options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+//    });
+//});
+
 #region Validation Error - Bad Request
 // -- Validation Error (Bad Request) 
 // --- First: We need to bring options which have InvalidModelState
@@ -128,6 +137,8 @@ if (app.Environment.IsDevelopment())
 // -- To this application can resolve on any static file like (html, wwwroot, etc..)
 app.UseStaticFiles();
 
+//app.UseCors("MyPolicy");
+
 // -- To Redirect Any Http Request To Https
 app.UseHttpsRedirection();
 
@@ -147,9 +158,9 @@ app.UseStatusCodePagesWithReExecute("/error/{0}");
 /// -- But We Use MapController Instead Of It Because We Create Routing On Controller Itself
 app.MapControllers(); // -> we use this middleware to talk program that: your routing depend on route written on the controller
 
-app.UseAuthentication();
+app.UseAuthentication(); // has token?
 
-app.UseAuthorization();
+app.UseAuthorization();  // is allowed to enter this end point?
 
 #endregion
 

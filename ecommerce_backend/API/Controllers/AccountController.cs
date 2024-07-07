@@ -7,6 +7,7 @@ using Core.Interfaces.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using Repository.Data;
 using System.Security.Cryptography;
 using System.Text;
@@ -21,10 +22,11 @@ namespace API.Controllers
         private readonly IEmailSettings _emailSettings;
         private readonly IdentityContext _identityContext;
         private readonly ILogger<AccountController> _logger;
+        private readonly IConfiguration _configuration;
 
         public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
             IAuthService authService, IEmailSettings emailSettings, IdentityContext identityContext,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -32,6 +34,7 @@ namespace API.Controllers
             _emailSettings = emailSettings;
             _identityContext = identityContext;
             _logger = logger;
+            _configuration = configuration;
         }
 
 
@@ -151,7 +154,7 @@ namespace API.Controllers
         [HttpPost("VerifyResetCode")]
         public async Task<ActionResult> VerifyResetCode(string email, string code)
         {
-            if (string.IsNullOrEmpty(email) || !IsValidEmail(email))
+            if (!IsValidEmail(email))
                 return BadRequest(new ApiResponse(400));
 
             var user = await _userManager.FindByEmailAsync(email);
@@ -159,7 +162,10 @@ namespace API.Controllers
             if (user is null)
                 return NotFound(new ApiResponse(404));
 
-            var identityCode = await _identityContext.IdentityCodes.Where(P => P.AppUserId == user.Id).OrderBy(d => d.CreationTime).LastOrDefaultAsync();
+            var identityCode = await _identityContext.IdentityCodes
+                                .Where(P => P.AppUserId == user.Id)
+                                .OrderBy(d => d.CreationTime)
+                                .LastOrDefaultAsync();
 
             if (identityCode is null)
                 return BadRequest(new ApiResponse(400, "No valid reset code found."));
@@ -169,11 +175,11 @@ namespace API.Controllers
 
             var lastCode = identityCode.Code;
 
-            if(lastCode != HashCode(code) || identityCode.CreationTime.Minute + 1 < DateTime.UtcNow.Minute)
-                return BadRequest(new ApiResponse(400, "This code has expired."));
-
-            if(!ConstantTimeComparison(lastCode, HashCode(code)))
+            if (!ConstantTimeComparison(lastCode, HashCode(code)))
                 return BadRequest(new ApiResponse(400, "Invalid reset code."));
+
+            if (identityCode.CreationTime.Minute + 1 < DateTime.UtcNow.Minute)
+                return BadRequest(new ApiResponse(400, "This code has expired."));
 
             identityCode.IsActive = true;
             identityCode.ActivationTime = DateTime.UtcNow;
@@ -202,7 +208,7 @@ namespace API.Controllers
             if (identityCode is null)
                 return BadRequest(new ApiResponse(400, "No valid reset code found."));
 
-            if (identityCode.ActivationTime is null || identityCode.ActivationTime.Value.AddMinutes(1) < DateTime.UtcNow)
+            if (identityCode.ActivationTime is null || identityCode.ActivationTime.Value.AddMinutes(30) < DateTime.UtcNow)
                 return BadRequest(new ApiResponse(400, "This code has expired."));
 
             using var transaction = await _identityContext.Database.BeginTransactionAsync();
@@ -238,6 +244,50 @@ namespace API.Controllers
             }
 
             return Ok(new ApiResponse(200, "Password changed successfully."));
+        }
+
+        [HttpPost("google-login")]
+        public async Task<IActionResult> GoogleLogin([FromBody] string tokenId)
+         {
+            if (ValidateGoogleToken(tokenId, out var googleUserId))
+            {
+                var user = await _userManager.FindByNameAsync(googleUserId);
+                if (user == null)
+                {
+                    user = new AppUser
+                    {
+                        UserName = googleUserId,
+                        Email = $"{googleUserId}@google.com"
+                    };
+                    var result = await _userManager.CreateAsync(user);
+                    if (!result.Succeeded)
+                    {
+                        return BadRequest(new ApiResponse(400, "Failed to create user."));
+                    }
+                }
+
+                var jwtToken = await _authService.CreateTokenAsync(user, _userManager);
+                return Ok(new { Token = jwtToken });
+            }
+            else
+            {
+                return BadRequest(new ApiResponse(400, "Invalid Google token."));
+            }
+        }
+
+        private bool ValidateGoogleToken(string tokenId, out string googleUserId)
+        {
+            var httpClient = new HttpClient();
+            var response = httpClient.GetAsync($"https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={tokenId}").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var json = response.Content.ReadAsStringAsync().Result;
+                var payload = JObject.Parse(json);
+                googleUserId = payload["sub"].ToString();
+                return payload["aud"].ToString() == _configuration["Google:ClientId"];
+            }
+            googleUserId = null;
+            return false;
         }
 
         private async Task<bool> CheckEmailExist(string email)
