@@ -47,16 +47,8 @@ builder.Services.AddJWTConfigurations(builder.Configuration);
 // This Method Has All Application Services
 builder.Services.AddApplicationServices();
 
+// Register mail service
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
-
-// This to allow any host from front-end
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("MyPolicy", options =>
-//    {
-//        options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-//    });
-//});
 
 #region Validation Error - Bad Request
 // -- Validation Error (Bad Request) 
@@ -136,8 +128,6 @@ if (app.Environment.IsDevelopment())
 
 // -- To this application can resolve on any static file like (html, wwwroot, etc..)
 app.UseStaticFiles();
-
-//app.UseCors("MyPolicy");
 
 // -- To Redirect Any Http Request To Https
 app.UseHttpsRedirection();

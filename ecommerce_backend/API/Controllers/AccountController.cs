@@ -80,7 +80,7 @@ namespace API.Controllers
 
         [HttpPost("login")]
         [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<AppUserDto>> Login(LoginDto model)
         {
@@ -111,6 +111,10 @@ namespace API.Controllers
         }
 
         [HttpGet("forgetpassword")]
+        [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> ForgetPassword(string email)
         {
             if (!IsValidEmail(email))
@@ -152,6 +156,9 @@ namespace API.Controllers
         }
 
         [HttpPost("VerifyResetCode")]
+        [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> VerifyResetCode(string email, string code)
         {
             if (!IsValidEmail(email))
@@ -190,6 +197,10 @@ namespace API.Controllers
         }
 
         [HttpPost("changepassword")]
+        [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> ChangePassword(string email, string newPassword)
         {
             if (string.IsNullOrEmpty(email) || !IsValidEmail(email))
@@ -247,6 +258,8 @@ namespace API.Controllers
         }
 
         [HttpPost("google-login")]
+        [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GoogleLogin([FromBody] string tokenId)
          {
             if (ValidateGoogleToken(tokenId, out var googleUserId))
