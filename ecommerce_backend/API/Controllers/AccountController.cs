@@ -16,32 +16,97 @@ namespace API.Controllers
 {
     public class AccountController : BaseController
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly SignInManager<AppUser> _signInManager;
         private readonly IAuthService _authService;
         private readonly IEmailSettings _emailSettings;
-        private readonly IdentityContext _identityContext;
-        private readonly ILogger<AccountController> _logger;
         private readonly IConfiguration _configuration;
+        private readonly IdentityContext _identityContext;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly ILogger<AccountController> _logger;
+        private readonly SignInManager<AppUser> _signInManager;
 
         public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
             IAuthService authService, IEmailSettings emailSettings, IdentityContext identityContext,
             ILogger<AccountController> logger, IConfiguration configuration)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _authService = authService;
-            _emailSettings = emailSettings;
-            _identityContext = identityContext;
             _logger = logger;
+            _userManager = userManager;
+            _authService = authService;
+            _signInManager = signInManager;
+            _emailSettings = emailSettings;
             _configuration = configuration;
+            _identityContext = identityContext;
         }
 
-
-        [HttpPost("register")]
+        [HttpPost("sendregistercode")]
         [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<AppUserDto>> Register(RegisterDto model)
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<AppUserDto>> SendRegisterCode(string email)
+        {
+            if (!IsValidEmail(email))
+                return BadRequest(new ApiResponse(400, "Invalid email format."));
+
+            var code = GenerateSecureCode();
+
+            Email emailToSend = new Email()
+            {
+                To = email,
+                Subject = $"{email.Split('@')[0]}, Your pin code is {code}. \r\nPlease confirm your email address",
+                Body = EmailBody(code, email.Split('@')[0], "Email Verification", "Thank you for registering with our service. To complete your registration")
+            };
+
+            try
+            {
+                await _identityContext.IdentityCodes.AddAsync(new IdentityCode()
+                {
+                    Code = HashCode(code),
+                    AppUserEmail = email,
+                    IsRegistered = false,
+                    IsActive = true
+                });
+
+                await _identityContext.SaveChangesAsync();
+
+                await _emailSettings.SendEmailMessage(emailToSend);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while sending password reset email.");
+                return StatusCode(500, new ApiResponse(500, "An error occurred while processing your request."));
+            }
+
+            return Ok(new ApiResponse(200, "Password reset email has been successfully sent."));
+        }
+
+        [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [HttpPost("verifyregistercode")]
+        public async Task<ActionResult> VerifyRegisterCode(string code, RegisterDto model)
+        {
+            var identityCode = await _identityContext.IdentityCodes
+                                .Where(P => P.AppUserEmail == model.Email && P.IsRegistered == false)
+                                .OrderBy(d => d.CreationTime)
+                                .LastOrDefaultAsync();
+
+            if (identityCode is null)
+                return BadRequest(new ApiResponse(400, "No valid reset code found."));
+
+            var lastCode = identityCode.Code;
+
+            if (!ConstantTimeComparison(lastCode, HashCode(code)))
+                return BadRequest(new ApiResponse(400, "Invalid reset code."));
+
+            if (!identityCode.IsActive || identityCode.CreationTime.Minute + 5 < DateTime.UtcNow.Minute)
+                return BadRequest(new ApiResponse(400, "This code has expired."));
+
+            identityCode.IsActive = false;
+            _identityContext.IdentityCodes.Update(identityCode);
+            await _identityContext.SaveChangesAsync();
+
+            return await Register(model);
+        }
+
+        private async Task<ActionResult> Register(RegisterDto model)
         {
             if (model is null)
                 return BadRequest(new ApiResponse(400, "Invalid registration data."));
@@ -58,6 +123,7 @@ namespace API.Controllers
                 Email = model.Email,
                 UserName = model.Email.Split('@')[0],
                 PhoneNumber = model.PhoneNumber,
+                EmailConfirmed = true
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -81,7 +147,6 @@ namespace API.Controllers
         [HttpPost("login")]
         [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<AppUserDto>> Login(LoginDto model)
         {
             if (model is null)
@@ -92,13 +157,13 @@ namespace API.Controllers
 
             var user = await _userManager.FindByEmailAsync(model.Email);
 
-            if (user is null)
-                return Unauthorized(new ApiResponse(401, "Invalid email or password."));
+            if (user is null || model.Password is null)
+                return BadRequest(new ApiResponse(400, "Invalid email or password."));
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
 
             if (result.Succeeded is false)
-                return Unauthorized(new ApiResponse(401, "Invalid email or password."));
+                return BadRequest(new ApiResponse(400, "Invalid email or password."));
 
             var token = await _authService.CreateTokenAsync(user, _userManager);
 
@@ -110,28 +175,27 @@ namespace API.Controllers
             });
         }
 
-        [HttpGet("forgetpassword")]
-        [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
+        [HttpPost("forgetpassword")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> ForgetPassword(string email)
         {
             if (!IsValidEmail(email))
-                return BadRequest(new ApiResponse(400));
+                return BadRequest(new ApiResponse(400, "Invalid email format."));
 
             var user = await _userManager.FindByEmailAsync(email);
 
             if (user is null)
-                return NotFound(new ApiResponse(404));
+                Ok(new ApiResponse(200, "If your email is registered with us, a password reset email has been successfully sent."));
 
             var code = GenerateSecureCode();
 
             Email emailToSend = new Email()
             {
                 To = email,
-                Subject = "Reset Your Password",
-                Body = EmailBody(code, user.UserName)
+                Subject = $"{user.DisplayName}, Reset Your Password - Verification Code: {code}",
+                Body = EmailBody(code, user.DisplayName, "Reset Password", "You have requested to reset your password.")
             };
 
             try
@@ -139,7 +203,8 @@ namespace API.Controllers
                 await _identityContext.IdentityCodes.AddAsync(new IdentityCode()
                 {
                     Code = HashCode(code),
-                    AppUserId = user.Id
+                    AppUserEmail = email,
+                    IsRegistered = true
                 });
 
                 await _identityContext.SaveChangesAsync();
@@ -152,25 +217,24 @@ namespace API.Controllers
                 return StatusCode(500, new ApiResponse(500, "An error occurred while processing your request."));
             }
 
-            return Ok(new ApiResponse(200, "Password reset email sent successfully."));
+            return Ok(new ApiResponse(200, "If your email is registered with us, a password reset email has been successfully sent."));
         }
 
         [HttpPost("VerifyResetCode")]
-        [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> VerifyResetCode(string email, string code)
+        public async Task<ActionResult> VerifyResetCode(VerifyEmailRequest model)
         {
-            if (!IsValidEmail(email))
-                return BadRequest(new ApiResponse(400));
+            if (!IsValidEmail(model.Email))
+                return BadRequest(new ApiResponse(400, "Invalid email format."));
 
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(model.Email);
 
             if (user is null)
-                return NotFound(new ApiResponse(404));
+                return BadRequest(new ApiResponse(400));
 
             var identityCode = await _identityContext.IdentityCodes
-                                .Where(P => P.AppUserId == user.Id)
+                                .Where(P => P.AppUserEmail == model.Email && P.IsRegistered)
                                 .OrderBy(d => d.CreationTime)
                                 .LastOrDefaultAsync();
 
@@ -182,10 +246,10 @@ namespace API.Controllers
 
             var lastCode = identityCode.Code;
 
-            if (!ConstantTimeComparison(lastCode, HashCode(code)))
+            if (!ConstantTimeComparison(lastCode, HashCode(model.VerificationCode)))
                 return BadRequest(new ApiResponse(400, "Invalid reset code."));
 
-            if (identityCode.CreationTime.Minute + 1 < DateTime.UtcNow.Minute)
+            if (identityCode.CreationTime.Minute + 5 < DateTime.UtcNow.Minute)
                 return BadRequest(new ApiResponse(400, "This code has expired."));
 
             identityCode.IsActive = true;
@@ -197,22 +261,21 @@ namespace API.Controllers
         }
 
         [HttpPost("changepassword")]
-        [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> ChangePassword(string email, string newPassword)
         {
-            if (string.IsNullOrEmpty(email) || !IsValidEmail(email))
+            if (!IsValidEmail(email))
                 return BadRequest(new ApiResponse(400));
 
             var user = await _userManager.FindByEmailAsync(email);
 
             if (user is null)
-                return NotFound(new ApiResponse(404));
+                return BadRequest(new ApiResponse(400));
 
             var identityCode = await _identityContext.IdentityCodes
-                                .Where(p => p.AppUserId == user.Id && p.IsActive)
+                                .Where(p => p.AppUserEmail == email && p.IsActive && p.IsRegistered)
                                 .OrderByDescending(p => p.CreationTime)
                                 .FirstOrDefaultAsync();
 
@@ -257,30 +320,44 @@ namespace API.Controllers
             return Ok(new ApiResponse(200, "Password changed successfully."));
         }
 
-        [HttpPost("google-login")]
+        [HttpPost("googlelogin")]
         [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GoogleLogin([FromBody] string tokenId)
-         {
-            if (ValidateGoogleToken(tokenId, out var googleUserId))
+        public async Task<ActionResult> GoogleLogin(string tokenId)
+        {
+            if (ValidateGoogleToken(tokenId, out JObject payload))
             {
-                var user = await _userManager.FindByNameAsync(googleUserId);
-                if (user == null)
+                var googleUserId = payload["sub"].ToString();
+                var email = payload["email"].ToString();
+
+                var user = await _userManager.FindByEmailAsync(email);
+
+                if (user is null)
                 {
                     user = new AppUser
                     {
                         UserName = googleUserId,
-                        Email = $"{googleUserId}@google.com"
+                        Email = email,
+                        DisplayName = googleUserId,
+                        EmailConfirmed = true
                     };
+
                     var result = await _userManager.CreateAsync(user);
+
                     if (!result.Succeeded)
                     {
                         return BadRequest(new ApiResponse(400, "Failed to create user."));
                     }
                 }
 
-                var jwtToken = await _authService.CreateTokenAsync(user, _userManager);
-                return Ok(new { Token = jwtToken });
+                var token = await _authService.CreateTokenAsync(user, _userManager);
+
+                return Ok(new AppUserDto
+                {
+                    DisplayName = user.DisplayName,
+                    Email = user.Email,
+                    Token = token
+                });
             }
             else
             {
@@ -288,19 +365,18 @@ namespace API.Controllers
             }
         }
 
-        private bool ValidateGoogleToken(string tokenId, out string googleUserId)
+        private bool ValidateGoogleToken(string tokenId, out JObject payload)
         {
             var httpClient = new HttpClient();
             var response = httpClient.GetAsync($"https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={tokenId}").Result;
             if (response.IsSuccessStatusCode)
             {
                 var json = response.Content.ReadAsStringAsync().Result;
-                var payload = JObject.Parse(json);
-                googleUserId = payload["sub"].ToString();
+                payload = JObject.Parse(json);
                 return payload["aud"].ToString() == _configuration["Google:ClientId"];
             }
-            googleUserId = null;
-            return false;
+            payload = null;
+            return false;   
         }
 
         private async Task<bool> CheckEmailExist(string email)
@@ -324,30 +400,49 @@ namespace API.Controllers
             }
         }
         
-        private string EmailBody(string code, string userName)
+        private string EmailBody(string code, string userName, string title, string message)
         {
             return $@"
-                <html>
+                <!DOCTYPE html>
+                <html lang=""en"">
                 <head>
+                    <meta charset=""UTF-8"">
+                    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+                    <title>Email Verification</title>
                     <style>
-                        .email-container {{
+                        body {{
                             font-family: Arial, sans-serif;
-                            color: #333333;
-                            line-height: 1.5;
+                            line-height: 1.6;
+                            background-color: #f5f5f5;
+                            margin: 0;
+                            padding: 0;
+                        }}
+                        .container {{
+                            max-width: 600px;
+                            margin: auto;
+                            padding: 20px;
+                            background-color: #ffffff;
+                            border-radius: 8px;
+                            box-shadow: 0 0 10px rgba(0,0,0,0.1);
                         }}
                         .header {{
-                            background-color: #f7f7f7;
-                            padding: 20px;
+                            background-color: #007bff;
+                            color: #ffffff;
+                            padding: 10px;
                             text-align: center;
-                            border-bottom: 1px solid #dddddd;
+                            border-top-left-radius: 8px;
+                            border-top-right-radius: 8px;
                         }}
                         .content {{
                             padding: 20px;
                         }}
                         .code {{
                             font-size: 24px;
-                            color: #2c3e50;
                             font-weight: bold;
+                            text-align: center;
+                            margin-top: 20px;
+                            margin-bottom: 30px;
+                            color: #007bff;
                         }}
                         .footer {{
                             background-color: #f7f7f7;
@@ -360,26 +455,25 @@ namespace API.Controllers
                     </style>
                 </head>
                 <body>
-                    <div class='email-container'>
-                        <div class='header'>
-                            <h1>Reset Your Password</h1>
+                    <div class=""container"">
+                        <div class=""header"">
+                            <h2>{title}</h2>
                         </div>
-                        <div class='content'>
+                        <div class=""content"">
                             <p>Dear {userName},</p>
-                            <p>You have requested to reset your password. Please use the following code to complete the process:</p>
-                            <p class='code'>{code}</p>
-                            <p>This code is valid for 30 minutes.</p>
-                            <p>If you did not request a password reset, please ignore this email or contact support if you have any concerns.</p>
-                            <p>Thank you,<br/>TwoAxis</p>
+                            <p>{message}, please use the following verification code:</p>
+                            <div class=""code"">{code}</div>
+                            <p>This code will expire in 5 minutes. Please use it promptly to verify your email address.</p>
+                            <p>If you did not request this verification, please ignore this email.</p>
                         </div>
-                        <div class='footer'>
+                        <div class=""footer"">
                             <p>&copy; 2024 TwoAxis. All rights reserved.</p>
                         </div>
                     </div>
                 </body>
                 </html>";
         }
-        
+
         private string GenerateSecureCode()
         {
             byte[] randomNumber = new byte[4];

@@ -25,6 +25,8 @@ namespace Repository.Identity
                 DisplayName = "Ahmed",
                 Email = "ahmedeldamity25@gmail.com",
                 UserName = "ahmedeldamity25",
+                PhoneNumber = "01110796304",
+                EmailConfirmed = true,
             };
 
             await _userManager.CreateAsync(user, "123QWEzxc#");
