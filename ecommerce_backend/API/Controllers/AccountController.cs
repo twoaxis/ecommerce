@@ -129,10 +129,7 @@ namespace API.Controllers
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded is false)
-            {
-                var errors = result.Errors.Select(e => e.Description).ToArray();
-                return BadRequest(new ApiValidationErrorResponse { Errors = errors });
-            }
+                return BadRequest(new ApiResponse(400, "User creation failed due to validation errors."));
 
             var token = await _authService.CreateTokenAsync(user, _userManager);
 
