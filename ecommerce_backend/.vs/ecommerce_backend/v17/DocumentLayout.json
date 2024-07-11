@@ -7,8 +7,15 @@
       "RelativeMoniker": "D:0:0:{5EB6A65D-2BE2-43F4-BB19-EC09EE62D391}|API\\API.csproj|solutionrelative:api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5EB6A65D-2BE2-43F4-BB19-EC09EE62D391}|API\\API.csproj|e:\\ecommerce\\ecommerce_backend\\api\\controllers\\rolecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5EB6A65D-2BE2-43F4-BB19-EC09EE62D391}|API\\API.csproj|solutionrelative:api\\controllers\\rolecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Haitham\\AppData\\Local\\SourceServer\\8eeb034da1a61b50445b34e7322f0a7b85eeaee6b6bb273fa31058a1314be877\\ecommerce_backend\\API\\Controllers\\AccountController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EB6A65D-2BE2-43F4-BB19-EC09EE62D391}|API\\API.csproj|e:\\ecommerce\\ecommerce_backend\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5EB6A65D-2BE2-43F4-BB19-EC09EE62D391}|API\\API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EB6A65D-2BE2-43F4-BB19-EC09EE62D391}|API\\API.csproj|e:\\ecommerce\\ecommerce_backend\\api\\dtos\\changepassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EB6A65D-2BE2-43F4-BB19-EC09EE62D391}|API\\API.csproj|solutionrelative:api\\dtos\\changepassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,20 +25,42 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "RoleController.cs",
-              "DocumentMoniker": "E:\\ecommerce\\ecommerce_backend\\API\\Controllers\\RoleController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\RoleController.cs",
-              "ToolTip": "E:\\ecommerce\\ecommerce_backend\\API\\Controllers\\RoleController.cs",
-              "RelativeToolTip": "API\\Controllers\\RoleController.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAAAwC8AAAABAAAA",
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\Haitham\\AppData\\Local\\SourceServer\\8eeb034da1a61b50445b34e7322f0a7b85eeaee6b6bb273fa31058a1314be877\\ecommerce_backend\\API\\Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\Haitham\\AppData\\Local\\SourceServer\\8eeb034da1a61b50445b34e7322f0a7b85eeaee6b6bb273fa31058a1314be877\\ecommerce_backend\\API\\Controllers\\AccountController.cs [Read Only]",
+              "ViewState": "AQIAAFsBAAAAAAAAAAAqwGoBAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-11T02:27:42.638Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T20:55:19.683Z",
+              "EditorCaption": " [Read Only]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "E:\\ecommerce\\ecommerce_backend\\API\\appsettings.json",
+              "RelativeDocumentMoniker": "API\\appsettings.json",
+              "ToolTip": "E:\\ecommerce\\ecommerce_backend\\API\\appsettings.json",
+              "RelativeToolTip": "API\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAA6AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-07-11T20:14:25.135Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ChangePasswordDto.cs",
+              "DocumentMoniker": "E:\\ecommerce\\ecommerce_backend\\API\\Dtos\\ChangePasswordDto.cs",
+              "RelativeDocumentMoniker": "API\\Dtos\\ChangePasswordDto.cs",
+              "ToolTip": "E:\\ecommerce\\ecommerce_backend\\API\\Dtos\\ChangePasswordDto.cs",
+              "RelativeToolTip": "API\\Dtos\\ChangePasswordDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAYAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-11T20:00:02.357Z"
             },
             {
               "$type": "Document",
@@ -41,7 +70,7 @@
               "RelativeDocumentMoniker": "API\\Controllers\\AccountController.cs",
               "ToolTip": "E:\\ecommerce\\ecommerce_backend\\API\\Controllers\\AccountController.cs",
               "RelativeToolTip": "API\\Controllers\\AccountController.cs",
-              "ViewState": "AQIAAHQAAAAAAAAAAAAkwIoAAAAkAAAA",
+              "ViewState": "AQIAAB8BAAAAAAAAAAAiwC0CAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-10T20:14:42.555Z",
               "EditorCaption": ""
