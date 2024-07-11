@@ -36,7 +36,7 @@ namespace API.Controllers
 
             var role = await _roleManager.FindByIdAsync(userRole.RoleId);
             if (role is null)
-                return NotFound(new ApiResponse(4040, "Role not found"));
+                return NotFound(new ApiResponse(404, "Role not found"));
 
             var result = await _userManager.AddToRoleAsync(user, role.Name);
             if (!result.Succeeded)

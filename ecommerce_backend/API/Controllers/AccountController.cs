@@ -115,7 +115,7 @@ namespace API.Controllers
                 return BadRequest(new ApiResponse(400, "Invalid email format."));
 
             if (await CheckEmailExist(model.Email))
-                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "This email has already been used" } });
+                return BadRequest(new ApiResponse(400, "This email has already been used."));
 
             var user = new AppUser()
             {
@@ -231,7 +231,7 @@ namespace API.Controllers
             var user = await _userManager.FindByEmailAsync(model.Email);
 
             if (user is null)
-                return BadRequest(new ApiResponse(400));
+                return BadRequest(new ApiResponse(400, "Invalid Email."));
 
             var identityCode = await _identityContext.IdentityCodes
                                 .Where(P => P.AppUserEmail == model.Email && P.IsRegistered)
@@ -267,12 +267,12 @@ namespace API.Controllers
         public async Task<ActionResult> ChangePassword(string email, string newPassword)
         {
             if (!IsValidEmail(email))
-                return BadRequest(new ApiResponse(400));
+                return BadRequest(new ApiResponse(400, "Invalid email format."));
 
             var user = await _userManager.FindByEmailAsync(email);
 
             if (user is null)
-                return BadRequest(new ApiResponse(400));
+                return BadRequest(new ApiResponse(400, "Invalid Email."));
 
             var identityCode = await _identityContext.IdentityCodes
                                 .Where(p => p.AppUserEmail == email && p.IsActive && p.IsRegistered)
