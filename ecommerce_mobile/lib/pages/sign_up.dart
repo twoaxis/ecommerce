@@ -1,10 +1,30 @@
+import 'dart:convert';
 import 'package:ecommerce_mobile/components/custom_scaffold.dart';
 import 'package:ecommerce_mobile/components/text_field.dart';
 import 'package:ecommerce_mobile/components/field_label.dart';
+import 'package:ecommerce_mobile/exceptions/StandardException.dart';
 import 'package:ecommerce_mobile/pages/log_in.dart';
 import 'package:ecommerce_mobile/components/error.dart' as ErrorComponent;
 import 'package:ecommerce_mobile/style.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+Future<void> Signup(emailController, passwordController) async {
+  final response = await http.post(
+    Uri.http("10.0.2.2:5000", "/api/Account/register"),
+    headers: <String, String>{'Content-Type': 'application/json'},
+    body: jsonEncode(<String, dynamic>{
+      'email': emailController.text,
+      'password': passwordController.text,
+    }),
+  );
+
+  final responseData = jsonDecode(response.body);
+  if (response.statusCode != 200) {
+    throw StandardException(responseData["errors"][0]);
+  }
+}
 
 class Sign_up extends StatefulWidget {
   const Sign_up({super.key});
@@ -84,7 +104,7 @@ class _Sign_upState extends State<Sign_up> {
                   height: 33.0,
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     setState(
                       () {
                         error = "";
@@ -105,6 +125,15 @@ class _Sign_upState extends State<Sign_up> {
                           error = "Passwords do not match";
                         },
                       );
+                    } else {
+                      try {
+                        await Signup(emailController, passwordController);
+                        print("Success");
+                      } on StandardException catch (err) {
+                        setState(() {
+                          error = err.toString();
+                        });
+                      }
                     }
                   },
                   child: Text("Sign Up",
