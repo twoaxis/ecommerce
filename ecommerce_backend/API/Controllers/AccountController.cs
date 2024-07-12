@@ -82,11 +82,11 @@ namespace API.Controllers
         [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<AppUserDto>> SendEmailVerificationCode(string email)
+        public async Task<ActionResult<AppUserDto>> SendEmailVerificationCode(EmailDto emailDto)
         {
-            if (!IsValidEmail(email))
+            if (!IsValidEmail(emailDto.Email))
                 return BadRequest(new ApiResponse(400, "Invalid email format."));
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(emailDto.Email);
 
             if (user is null)
                 return Ok(new ApiResponse(200, "If your email is registered with us, a email verification code has been successfully sent."));
@@ -95,9 +95,9 @@ namespace API.Controllers
 
             Email emailToSend = new Email()
             {
-                To = email,
-                Subject = $"{email.Split('@')[0]}, Your pin code is {code}. \r\nPlease confirm your email address",
-                Body = EmailBody(code, email.Split('@')[0], "Email Verification", "Thank you for registering with our service. To complete your registration")
+                To = emailDto.Email,
+                Subject = $"{emailDto.Email.Split('@')[0]}, Your pin code is {code}. \r\nPlease confirm your email address",
+                Body = EmailBody(code, emailDto.Email.Split('@')[0], "Email Verification", "Thank you for registering with our service. To complete your registration")
             };
 
             try
@@ -197,12 +197,12 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> ForgetPassword(string email)
+        public async Task<ActionResult> ForgetPassword(EmailDto emailDto)
         {
-            if (!IsValidEmail(email))
+            if (!IsValidEmail(emailDto.Email))
                 return BadRequest(new ApiResponse(400, "Invalid email format."));
 
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(emailDto.Email);
 
             if (user is null)
                 return Ok(new ApiResponse(200, "If your email is registered with us, a password reset email has been successfully sent."));
@@ -214,7 +214,7 @@ namespace API.Controllers
 
             Email emailToSend = new Email()
             {
-                To = email,
+                To = emailDto.Email,
                 Subject = $"{user.DisplayName}, Reset Your Password - Verification Code: {code}",
                 Body = EmailBody(code, user.DisplayName, "Reset Password", "You have requested to reset your password.")
             };
@@ -359,9 +359,9 @@ namespace API.Controllers
         [HttpPost("googlelogin")]
         [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> GoogleLogin(string tokenId)
+        public async Task<ActionResult> GoogleLogin(TokenIdDto tokenIdDto)
         {
-            if (ValidateGoogleToken(tokenId, out JObject payload))
+            if (ValidateGoogleToken(tokenIdDto.TokenId, out JObject payload))
             {
                 var userName = payload["name"].ToString();
                 var email = payload["email"].ToString();
@@ -388,7 +388,7 @@ namespace API.Controllers
                 }
                 else
                 {
-                    if (user.IsFirstRegisterGoogle) // exist user before and the first time for real person
+                    if (!user.EmailConfirmed && user.IsFirstRegisterGoogle) // exist user before and the first time for real person
                         code = "auth/email-existed";
                 }
 
