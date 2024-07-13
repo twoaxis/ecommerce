@@ -56,7 +56,9 @@ const SignupForm = () => {
 	const [ pending, setPending ] = useState(false);
 	const [ error, setError ] = useState();
 	const [ input, setInput ] = useState({
+		name: "",
 		email: "",
+		phone: "",
 		password: "",
 		repeatPassword: ""
 	});
@@ -101,11 +103,29 @@ const SignupForm = () => {
 			<Title>Create an Account</Title>
 			{error && <ErrorMessage>{error}</ErrorMessage>}
 			<LabeledInputField 
+				id="name" 
+				type="text" 
+				name="name"
+				label="Name" 
+				placeholder="John Smith"
+				disabled={pending}
+				onChange={handleInput}
+			/>
+			<LabeledInputField 
 				id="email" 
 				type="email" 
 				name="email"
 				label="E-mail" 
 				placeholder="johnsmith@twoaxis.com"
+				disabled={pending}
+				onChange={handleInput}
+			/>
+			<LabeledInputField 
+				id="phone" 
+				type="tel" 
+				name="phone"
+				label="Phone Number" 
+				placeholder="+1 234 5678"
 				disabled={pending}
 				onChange={handleInput}
 			/>
