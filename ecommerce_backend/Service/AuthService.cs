@@ -19,6 +19,7 @@ namespace Service
         }
         public async Task<string> CreateTokenAsync(AppUser user, UserManager<AppUser> userManager)
         {
+
             // Private Claims (user defined - can change from user to other)
             var authClaims = new List<Claim>()
             {
