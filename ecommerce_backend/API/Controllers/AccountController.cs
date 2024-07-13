@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using Repository.Data;
-using System;
 using System.Security.Cryptography;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace API.Controllers   
 {
@@ -44,15 +44,24 @@ namespace API.Controllers
         public async Task<ActionResult> Register(RegisterDto model)
         {
             if (model is null)
-                return BadRequest(new ApiResponse(400, "Invalid registration data."));
+            {
+                List<string> errors = new List<string>() { "Invalid registration data." };
+                return BadRequest(new ApiValidationErrorResponse { Errors = errors });
+            }
 
             if (!IsValidEmail(model.Email))
-                return BadRequest(new ApiResponse(400, "Invalid email format."));
+            {
+                List<string> errors = new List<string>() { "Invalid email format." };
+                return BadRequest(new ApiValidationErrorResponse { Errors = errors });
+            }
 
             var user = await _userManager.FindByEmailAsync(model.Email);
 
             if (user is not null && user.EmailConfirmed is true)
-                return BadRequest(new ApiResponse(400, "This email has already been used."));
+            {
+                List<string> errors = new List<string>() { "This email has already been used." };
+                return BadRequest(new ApiValidationErrorResponse { Errors = errors });
+            }
 
             var newUser = new AppUser()
             {
@@ -66,7 +75,10 @@ namespace API.Controllers
             var result = await _userManager.CreateAsync(newUser, model.Password);
 
             if (result.Succeeded is false)
-                return BadRequest(new ApiResponse(400, "User creation failed due to validation errors."));
+            {
+                var errors = result.Errors.Select(e => e.Description).ToArray();
+                return BadRequest(new ApiValidationErrorResponse { Errors = errors });
+            }
 
             var token = await _authService.CreateTokenAsync(newUser, _userManager);
 
