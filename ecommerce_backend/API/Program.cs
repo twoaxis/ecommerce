@@ -47,6 +47,7 @@ builder.Services.AddJWTConfigurations(builder.Configuration);
 // This Method Has All Application Services
 builder.Services.AddApplicationServices();
 
+// Register mail service
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
 #region Validation Error - Bad Request
@@ -147,10 +148,10 @@ app.UseStatusCodePagesWithReExecute("/error/{0}");
 /// -- But We Use MapController Instead Of It Because We Create Routing On Controller Itself
 app.MapControllers(); // -> we use this middleware to talk program that: your routing depend on route written on the controller
 
-app.UseAuthentication();
+app.UseAuthentication(); // has token?
 
-app.UseAuthorization();
+app.UseAuthorization();  // is allowed to enter this end point?
 
 #endregion
 
-app.Run(); 
+app.Run();

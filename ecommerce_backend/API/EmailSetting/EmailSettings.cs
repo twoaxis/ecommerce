@@ -10,13 +10,15 @@ namespace API.EmailSetting
     public class EmailSettings : IEmailSettings
     {
         private readonly MailSettings _options;
+        private readonly ILogger<EmailSettings> _logger;
 
-        public EmailSettings(IOptions<MailSettings> options)
+        public EmailSettings(IOptions<MailSettings> options, ILogger<EmailSettings> logger)
         {
             _options = options.Value;
+            _logger = logger;
         }
 
-        public void SendEmail(Email email)
+        public async Task SendEmailMessage(Email email)
         {
             var mail = new MimeMessage
             {
@@ -28,14 +30,26 @@ namespace API.EmailSetting
             mail.To.Add(new MailboxAddress("User", email.To));
 
             var builder = new BodyBuilder();
-            builder.TextBody = email.Body;
+            builder.HtmlBody = email.Body;
             mail.Body = builder.ToMessageBody();
 
             using var smtp = new SmtpClient();
-            smtp.Connect(_options.Host, _options.Port, SecureSocketOptions.SslOnConnect);
-            smtp.Authenticate(_options.Email, _options.Password);
-            smtp.Send(mail);
-            smtp.Disconnect(true);
+            
+            try
+            {
+                await smtp.ConnectAsync(_options.Host, _options.Port, SecureSocketOptions.SslOnConnect);
+                await smtp.AuthenticateAsync(_options.Email, _options.Password);
+                await smtp.SendAsync(mail);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while sending email.");
+                throw;
+            }
+            finally
+            {
+                await smtp.DisconnectAsync(true);
+            }
         }
     }
 }

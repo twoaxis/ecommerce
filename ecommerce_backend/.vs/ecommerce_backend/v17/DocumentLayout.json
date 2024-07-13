@@ -1,0 +1,104 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\ecommerce\\ecommerce_backend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5EB6A65D-2BE2-43F4-BB19-EC09EE62D391}|API\\API.csproj|e:\\ecommerce\\ecommerce_backend\\api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EB6A65D-2BE2-43F4-BB19-EC09EE62D391}|API\\API.csproj|solutionrelative:api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EB6A65D-2BE2-43F4-BB19-EC09EE62D391}|API\\API.csproj|e:\\ecommerce\\ecommerce_backend\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5EB6A65D-2BE2-43F4-BB19-EC09EE62D391}|API\\API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EB6A65D-2BE2-43F4-BB19-EC09EE62D391}|API\\API.csproj|e:\\ecommerce\\ecommerce_backend\\api\\dtos\\tokeniddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EB6A65D-2BE2-43F4-BB19-EC09EE62D391}|API\\API.csproj|solutionrelative:api\\dtos\\tokeniddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EB6A65D-2BE2-43F4-BB19-EC09EE62D391}|API\\API.csproj|e:\\ecommerce\\ecommerce_backend\\api\\dtos\\emaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EB6A65D-2BE2-43F4-BB19-EC09EE62D391}|API\\API.csproj|solutionrelative:api\\dtos\\emaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EB6A65D-2BE2-43F4-BB19-EC09EE62D391}|API\\API.csproj|e:\\ecommerce\\ecommerce_backend\\api\\dtos\\changepassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EB6A65D-2BE2-43F4-BB19-EC09EE62D391}|API\\API.csproj|solutionrelative:api\\dtos\\changepassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TokenIdDto.cs",
+              "DocumentMoniker": "E:\\ecommerce\\ecommerce_backend\\API\\Dtos\\TokenIdDto.cs",
+              "RelativeDocumentMoniker": "API\\Dtos\\TokenIdDto.cs",
+              "ToolTip": "E:\\ecommerce\\ecommerce_backend\\API\\Dtos\\TokenIdDto.cs",
+              "RelativeToolTip": "API\\Dtos\\TokenIdDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-11T21:52:21.666Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EmailDto.cs",
+              "DocumentMoniker": "E:\\ecommerce\\ecommerce_backend\\API\\Dtos\\EmailDto.cs",
+              "RelativeDocumentMoniker": "API\\Dtos\\EmailDto.cs",
+              "ToolTip": "E:\\ecommerce\\ecommerce_backend\\API\\Dtos\\EmailDto.cs",
+              "RelativeToolTip": "API\\Dtos\\EmailDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-11T21:49:41.075Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "E:\\ecommerce\\ecommerce_backend\\API\\appsettings.json",
+              "RelativeDocumentMoniker": "API\\appsettings.json",
+              "ToolTip": "E:\\ecommerce\\ecommerce_backend\\API\\appsettings.json",
+              "RelativeToolTip": "API\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-07-11T20:14:25.135Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ChangePasswordDto.cs",
+              "DocumentMoniker": "E:\\ecommerce\\ecommerce_backend\\API\\Dtos\\ChangePasswordDto.cs",
+              "RelativeDocumentMoniker": "API\\Dtos\\ChangePasswordDto.cs",
+              "ToolTip": "E:\\ecommerce\\ecommerce_backend\\API\\Dtos\\ChangePasswordDto.cs",
+              "RelativeToolTip": "API\\Dtos\\ChangePasswordDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAYAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-11T20:00:02.357Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "E:\\ecommerce\\ecommerce_backend\\API\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\AccountController.cs",
+              "ToolTip": "E:\\ecommerce\\ecommerce_backend\\API\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "API\\Controllers\\AccountController.cs",
+              "ViewState": "AQIAAGUBAAAAAAAAAADwv54BAABNAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-11T21:50:53.095Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
