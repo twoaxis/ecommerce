@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:ecommerce_mobile/components/password.dart';
 import 'package:ecommerce_mobile/components/text_field.dart';
 import 'package:ecommerce_mobile/components/field_label.dart';
 import 'package:ecommerce_mobile/exceptions/StandardException.dart';
@@ -23,6 +22,7 @@ Future<void> Signup(emailController, passwordController, nameController,
   );
 
   final responseData = jsonDecode(response.body);
+  print(response.body);
   if (response.statusCode != 200) {
     throw StandardException(responseData["errors"][0]);
   }
@@ -76,7 +76,7 @@ class _Sign_upState extends State<Sign_up> {
                   SizedBox(
                     height: 28.0,
                   ),
-                  FieldLabel(text: 'Display Name:'),
+                  FieldLabel(text: 'Name:'),
                   SizedBox(
                     height: 6.0,
                   ),
@@ -166,6 +166,12 @@ class _Sign_upState extends State<Sign_up> {
                             error = "Please fill in all fields";
                           },
                         );
+                      } else if (!passwordController.text.contains(RegExp(
+                          r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d])(?:(?!.*(.)\1{2}).){6,}$"))) {
+                        setState(() {
+                          error =
+                              "Password must contain at least 6 characters, 1 uppercase letter, 1 lowercase letter, 1 symbol and no sequencing characters";
+                        });
                       } else if (passwordController.text !=
                           repeatPasswordController.text) {
                         setState(
