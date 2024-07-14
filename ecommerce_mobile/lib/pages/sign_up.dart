@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ecommerce_mobile/components/password.dart';
 import 'package:ecommerce_mobile/components/text_field.dart';
 import 'package:ecommerce_mobile/components/field_label.dart';
 import 'package:ecommerce_mobile/exceptions/StandardException.dart';
@@ -42,6 +43,7 @@ class _Sign_upState extends State<Sign_up> {
   TextEditingController phoneController = TextEditingController();
 
   String error = "";
+  bool IsPasswordShown = false;
 
   @override
   Widget build(BuildContext context) {
@@ -113,21 +115,37 @@ class _Sign_upState extends State<Sign_up> {
                   ),
                   FieldLabel(text: 'Password:'),
                   CustomTextField.CustomTextField(
-                    controller: passwordController,
-                    textInputType: TextInputType.emailAddress,
-                    hint_text: '••••••••••••••',
-                    isPassword: true,
-                  ),
+                      controller: passwordController,
+                      textInputType: TextInputType.emailAddress,
+                      hint_text: '••••••••••••••',
+                      isPassword: !IsPasswordShown,
+                      icon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              IsPasswordShown = !IsPasswordShown;
+                            });
+                          },
+                          icon: Icon(IsPasswordShown
+                              ? Icons.visibility
+                              : Icons.visibility_off))),
                   SizedBox(
                     height: 20.0,
                   ),
                   FieldLabel(text: 'Repeat Password:'),
                   CustomTextField.CustomTextField(
-                    controller: repeatPasswordController,
-                    textInputType: TextInputType.emailAddress,
-                    hint_text: '••••••••••••••',
-                    isPassword: true,
-                  ),
+                      controller: repeatPasswordController,
+                      textInputType: TextInputType.emailAddress,
+                      hint_text: '••••••••••••••',
+                      isPassword: !IsPasswordShown,
+                      icon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              IsPasswordShown = !IsPasswordShown;
+                            });
+                          },
+                          icon: Icon(IsPasswordShown
+                              ? Icons.visibility
+                              : Icons.visibility_off))),
                   SizedBox(
                     height: 33.0,
                   ),

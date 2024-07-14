@@ -18,10 +18,11 @@ class _LogInState extends State<LogIn> {
   TextEditingController passwordController = TextEditingController();
 
   String error = "";
+  bool IsPasswordShown = false;
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
+    return Scaffold(
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(33.0),
@@ -62,11 +63,19 @@ class _LogInState extends State<LogIn> {
                 ),
                 FieldLabel(text: 'Password:'),
                 CustomTextField.CustomTextField(
-                  controller: passwordController,
-                  textInputType: TextInputType.emailAddress,
-                  hint_text: '••••••••••••••',
-                  isPassword: true,
-                ),
+                    controller: passwordController,
+                    textInputType: TextInputType.emailAddress,
+                    hint_text: '••••••••••••••',
+                    isPassword: !IsPasswordShown,
+                    icon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            IsPasswordShown = !IsPasswordShown;
+                          });
+                        },
+                        icon: Icon(IsPasswordShown
+                            ? Icons.visibility
+                            : Icons.visibility_off))),
                 SizedBox(
                   height: 33.0,
                 ),
