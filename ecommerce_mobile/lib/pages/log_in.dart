@@ -1,10 +1,28 @@
+import 'dart:convert';
+import 'package:ecommerce_mobile/exceptions/StandardException.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
 import 'package:ecommerce_mobile/components/custom_scaffold.dart';
-import 'package:ecommerce_mobile/components/text_field.dart';
+import 'package:ecommerce_mobile/components/error.dart' as ErrorComponent;
 import 'package:ecommerce_mobile/components/field_label.dart';
+import 'package:ecommerce_mobile/components/text_field.dart';
 import 'package:ecommerce_mobile/pages/sign_up.dart';
 import 'package:ecommerce_mobile/style.dart';
-import 'package:flutter/material.dart';
-import 'package:ecommerce_mobile/components/error.dart' as ErrorComponent;
+
+Future<void> Login(emailController, passwordController) async {
+  final response =
+      await http.post(Uri.http("10.0.2.2:5000", "/api/Account/login"),
+          headers: <String, String>{'Content-Type': 'application/json'},
+          body: jsonEncode(<String, dynamic>{
+            'email': emailController.text,
+            'password': passwordController.text,
+          }));
+
+  final responseData = jsonDecode(response.body);
+  if (response.statusCode != 200) {
+    throw StandardException(['error'][0]);
+  }
+}
 
 class LogIn extends StatefulWidget {
   LogIn({super.key});
@@ -80,7 +98,7 @@ class _LogInState extends State<LogIn> {
                   height: 33.0,
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     setState(
                       () {
                         error = "";
@@ -93,6 +111,15 @@ class _LogInState extends State<LogIn> {
                           error = "Please fill in all fields";
                         },
                       );
+                    } else {
+                      try {
+                        await Login(emailController, passwordController);
+                        print('Success');
+                      } catch (err) {
+                        setState(() {
+                          error = err.toString();
+                        });
+                      }
                     }
                   },
                   child: Text(
