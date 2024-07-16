@@ -1,54 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "E:\\ecommerce\\ecommerce_backend\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{8168015C-56AA-4034-A39B-56504878C9B0}|Repository\\Repository.csproj|e:\\ecommerce\\ecommerce_backend\\repository\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8168015C-56AA-4034-A39B-56504878C9B0}|Repository\\Repository.csproj|solutionrelative:repository\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{631516F1-3CA9-4B7B-9463-912D163309AA}|Core\\Core.csproj|e:\\ecommerce\\ecommerce_backend\\core\\interfaces\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{631516F1-3CA9-4B7B-9463-912D163309AA}|Core\\Core.csproj|solutionrelative:core\\interfaces\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 1,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "IGenericRepository.cs",
-              "DocumentMoniker": "E:\\ecommerce\\ecommerce_backend\\Core\\Interfaces\\Repositories\\IGenericRepository.cs",
-              "RelativeDocumentMoniker": "Core\\Interfaces\\Repositories\\IGenericRepository.cs",
-              "ToolTip": "E:\\ecommerce\\ecommerce_backend\\Core\\Interfaces\\Repositories\\IGenericRepository.cs",
-              "RelativeToolTip": "Core\\Interfaces\\Repositories\\IGenericRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-16T19:21:26.667Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "GenericRepository.cs",
-              "DocumentMoniker": "E:\\ecommerce\\ecommerce_backend\\Repository\\GenericRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\GenericRepository.cs",
-              "ToolTip": "E:\\ecommerce\\ecommerce_backend\\Repository\\GenericRepository.cs",
-              "RelativeToolTip": "Repository\\GenericRepository.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAABUAAAAyAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-16T19:27:20.926Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }
