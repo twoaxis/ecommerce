@@ -11,6 +11,14 @@
       "RelativeMoniker": "D:0:0:{B8BD6E5E-CA07-4F7B-B921-D44574F84DD6}|Service\\Service.csproj|solutionrelative:service\\brandservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{631516F1-3CA9-4B7B-9463-912D163309AA}|Core\\Core.csproj|e:\\ecommerce\\ecommerce_backend\\core\\interfaces\\services\\icategoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{631516F1-3CA9-4B7B-9463-912D163309AA}|Core\\Core.csproj|solutionrelative:core\\interfaces\\services\\icategoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8BD6E5E-CA07-4F7B-B921-D44574F84DD6}|Service\\Service.csproj|e:\\ecommerce\\ecommerce_backend\\service\\categoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8BD6E5E-CA07-4F7B-B921-D44574F84DD6}|Service\\Service.csproj|solutionrelative:service\\categoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B8BD6E5E-CA07-4F7B-B921-D44574F84DD6}|Service\\Service.csproj|e:\\ecommerce\\ecommerce_backend\\service\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B8BD6E5E-CA07-4F7B-B921-D44574F84DD6}|Service\\Service.csproj|solutionrelative:service\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -34,8 +42,34 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CategoryService.cs",
+              "DocumentMoniker": "E:\\ecommerce\\ecommerce_backend\\Service\\CategoryService.cs",
+              "RelativeDocumentMoniker": "Service\\CategoryService.cs",
+              "ToolTip": "E:\\ecommerce\\ecommerce_backend\\Service\\CategoryService.cs",
+              "RelativeToolTip": "Service\\CategoryService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-17T21:03:25.541Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ICategoryService.cs",
+              "DocumentMoniker": "E:\\ecommerce\\ecommerce_backend\\Core\\Interfaces\\Services\\ICategoryService.cs",
+              "RelativeDocumentMoniker": "Core\\Interfaces\\Services\\ICategoryService.cs",
+              "ToolTip": "E:\\ecommerce\\ecommerce_backend\\Core\\Interfaces\\Services\\ICategoryService.cs",
+              "RelativeToolTip": "Core\\Interfaces\\Services\\ICategoryService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-17T21:00:40.005Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -64,7 +98,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "ProductService.cs",
               "DocumentMoniker": "E:\\ecommerce\\ecommerce_backend\\Service\\ProductService.cs",
               "RelativeDocumentMoniker": "Service\\ProductService.cs",
@@ -76,7 +110,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "IProductService.cs",
               "DocumentMoniker": "E:\\ecommerce\\ecommerce_backend\\Core\\Interfaces\\Services\\IProductService.cs",
               "RelativeDocumentMoniker": "Core\\Interfaces\\Services\\IProductService.cs",
@@ -88,7 +122,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "SpecificationsEvaluator.cs",
               "DocumentMoniker": "E:\\ecommerce\\ecommerce_backend\\Repository\\SpecificationsEvaluator.cs",
               "RelativeDocumentMoniker": "Repository\\SpecificationsEvaluator.cs",
@@ -100,7 +134,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "GenericRepository.cs",
               "DocumentMoniker": "E:\\ecommerce\\ecommerce_backend\\Repository\\GenericRepository.cs",
               "RelativeDocumentMoniker": "Repository\\GenericRepository.cs",
