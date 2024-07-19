@@ -21,6 +21,13 @@ namespace Service
             return products;
         }
 
+        public async Task<int> GetProductCount(ProductSpecificationParameters specParams)
+        {
+            var spec = new ProductCountSpecification(specParams);
+            var productsCount = await _unitOfWork.Repository<Product>().GetCountAsync(spec);
+            return productsCount;
+        }
+
         public async Task<Product?> GetProductWithSpecificationsAsync(int id)
         {
             var spec = new ProductWithBrandAndCategorySpecifications(id);

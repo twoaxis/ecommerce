@@ -37,6 +37,8 @@ namespace Core.Specifications.ProductSpecifications
             }
             else
                 OrderBy = p => p.Price;
+
+            ApplyPagination((specParams.PageIndex - 1) * specParams.PageSize, specParams.PageSize);
         }
 
         public ProductWithBrandAndCategorySpecifications(int id)

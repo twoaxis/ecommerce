@@ -18,6 +18,9 @@ namespace Repository
             else if (spec.OrderByDesc != null)
                 query = query.OrderByDescending(spec.OrderByDesc);
 
+            if (spec.IsPaginationEnabled)
+                query = query.Skip(spec.Skip).Take(spec.Take);
+
             query = spec.IncludesCriteria.Aggregate(query, (currentQuery, includeExpression) => currentQuery.Include(includeExpression));
 
             return query;
