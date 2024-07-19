@@ -123,6 +123,8 @@ namespace API.Controllers
 
                 await _identityContext.SaveChangesAsync();
 
+                _logger.LogInformation($"Your Code is: {code}");
+
                 await _emailSettings.SendEmailMessage(emailToSend);
             }
             catch (Exception ex)

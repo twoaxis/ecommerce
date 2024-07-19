@@ -38,6 +38,7 @@ namespace API.EmailSetting
             try
             {
                 await smtp.ConnectAsync(_options.Host, _options.Port, SecureSocketOptions.SslOnConnect);
+                //await smtp.ConnectAsync(_options.Host, 587, SecureSocketOptions.StartTls);
                 await smtp.AuthenticateAsync(_options.Email, _options.Password);
                 await smtp.SendAsync(mail);
             }

@@ -23,6 +23,7 @@ namespace API.ServicesExtension
             // Register AuthService
             services.AddScoped(typeof(IAuthService), typeof(AuthService));
 
+            // Register Email Settings service
             services.AddTransient(typeof(IEmailSettings), typeof(EmailSettings));
 
             // Register Unit Of Work

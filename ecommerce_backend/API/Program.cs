@@ -51,7 +51,7 @@ builder.Services.AddStoreContext(builder.Configuration);
 // This Method Has All Application Services
 builder.Services.AddApplicationServices();
 
-// Register mail service
+//Register mail service
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
 // This to allow any host from front-end
