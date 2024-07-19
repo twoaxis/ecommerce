@@ -149,3 +149,5 @@ E:\ecommerce\ecommerce_backend\API\obj\Debug\net8.0\refint\API.dll
 E:\ecommerce\ecommerce_backend\API\obj\Debug\net8.0\API.pdb
 E:\ecommerce\ecommerce_backend\API\obj\Debug\net8.0\API.genruntimeconfig.cache
 E:\ecommerce\ecommerce_backend\API\obj\Debug\net8.0\ref\API.dll
+E:\ecommerce\ecommerce_backend\API\bin\Debug\net8.0\AutoMapper.dll
+E:\ecommerce\ecommerce_backend\API\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

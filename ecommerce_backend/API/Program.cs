@@ -125,6 +125,8 @@ try
 
     // Migrate StoreContext
     await _storeContext.Database.MigrateAsync();
+    // Seeding Data For StoreContext
+    await StoreContextSeed.SeedProductDataAsync(_storeContext);
 }
 catch (Exception ex)
 {
