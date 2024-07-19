@@ -1,5 +1,6 @@
 ﻿using API.Dtos;
 using AutoMapper;
+using Core.Entities;
 using Core.Entities.Product_Entities;
 using DotNetCore_ECommerce.Helpers;
 
@@ -21,6 +22,9 @@ namespace API.Helpers
                 // -- the solution of this issue is: instead of using MapFrom I use MapFrom<"class inherit from IValueResolver<sourse, destination, member>">
                 .ForMember(d => d.ImageCover, o => o.MapFrom<ProductImageCoverResolver>())
                 .ForMember(d => d.Images, o => o.MapFrom<ProductImagesResolver>());
+
+            CreateMap<ProductBrand, ProductBrandToReturnDto>()
+                .ForMember(d => d.ImageCover, o => o.MapFrom<ProductBrandImageCoverResolver>());
         }
     }
 }

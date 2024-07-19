@@ -1,13 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "vOb/D/ifTxo=",
+  "dgSpecHash": "BHqFuaeKPTo=",
   "success": true,
   "projectFilePath": "E:\\ecommerce\\ecommerce_backend\\Service\\Service.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Haitham\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
+    "C:\\Users\\Haitham\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\Haitham\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.0\\microsoft.aspnetcore.authentication.jwtbearer.8.0.0.nupkg.sha512",
     "C:\\Users\\Haitham\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\8.0.0\\microsoft.aspnetcore.cryptography.internal.8.0.0.nupkg.sha512",
     "C:\\Users\\Haitham\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\8.0.0\\microsoft.aspnetcore.cryptography.keyderivation.8.0.0.nupkg.sha512",
     "C:\\Users\\Haitham\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\8.0.0\\microsoft.aspnetcore.identity.entityframeworkcore.8.0.0.nupkg.sha512",
+    "C:\\Users\\Haitham\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Haitham\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.0\\microsoft.entityframeworkcore.8.0.0.nupkg.sha512",
     "C:\\Users\\Haitham\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.0\\microsoft.entityframeworkcore.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\Haitham\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.0\\microsoft.entityframeworkcore.analyzers.8.0.0.nupkg.sha512",
