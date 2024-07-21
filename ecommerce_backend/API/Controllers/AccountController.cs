@@ -11,7 +11,6 @@ using Newtonsoft.Json.Linq;
 using Repository.Data;
 using System.Security.Cryptography;
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace API.Controllers   
 {

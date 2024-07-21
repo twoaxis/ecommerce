@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repository.Data;
 using Repository.Identity;
+using Repository.Store;
 
 #region Update Database Problems And Solution
 // To Update Database You Should Do Two Things 
@@ -38,11 +39,14 @@ builder.Services.AddControllers();
 // Register Required Services For Swagger In Extension Method
 builder.Services.AddSwaggerServices();
 
-// Add Identity Configurations
+// Add Identity Context and Configurations
 builder.Services.AddIdentityConfigurations(builder.Configuration);
 
 // Add JWT Configurations
 builder.Services.AddJWTConfigurations(builder.Configuration);
+
+// Add Store Context
+builder.Services.AddStoreContext(builder.Configuration);
 
 // This Method Has All Application Services
 builder.Services.AddApplicationServices();
@@ -103,6 +107,8 @@ var services = scope.ServiceProvider;
 
 // --> Bring Object Of IdentityContext For Update His Migration
 var _identiyContext = services.GetRequiredService<IdentityContext>();
+// --> Bring Object Of StoreContext For Update His Migration
+var _storeContext = services.GetRequiredService<StoreContext>();
 // --> Bring Object Of UserManager
 var _userManager = services.GetRequiredService<UserManager<AppUser>>();
 // --> Bring Object Of RoleManager
@@ -116,6 +122,11 @@ try
     await _identiyContext.Database.MigrateAsync();
     // Seeding Data For IdentityContext
     await IdentityContextSeeding.SeedIdentityData(_userManager, _roleManager);
+
+    // Migrate StoreContext
+    await _storeContext.Database.MigrateAsync();
+    // Seeding Data For StoreContext
+    await StoreContextSeed.SeedProductDataAsync(_storeContext);
 }
 catch (Exception ex)
 {
